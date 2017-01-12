@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static final DriveTrain driveTrain = new DriveTrain(RobotMap.leftTalon, RobotMap.RightTalon);
+	public static final DriveTrain driveTrain = new DriveTrain(RobotMap.TANKDRIVE_LEFT_ID, RobotMap.TANKDRIVE_RIGHT_ID);
 	public static OI oi;
 
     Command autonomousCommand;

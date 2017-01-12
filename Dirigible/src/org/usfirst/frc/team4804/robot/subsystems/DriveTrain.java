@@ -18,18 +18,22 @@ public class DriveTrain extends Subsystem {
     // here. Call these from Commands.
 	
 	RobotDrive drive;
+	CANTalon leftTalon;
+	CANTalon rightTalon;
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new JoystickDriveCommand());
     }
     
-    public DriveTrain(CANTalon leftTalon, CANTalon rightTalon) {
+    public DriveTrain(int leftTalonId, int rightTalonId) {
+    	leftTalon = new CANTalon(leftTalonId);
+    	rightTalon = new CANTalon(rightTalonId);
     	drive = new RobotDrive(leftTalon, rightTalon);
     }
     
-    public void JoystickDrive(XboxController controller) {
-    	drive.tankDrive(controller.getRawAxis(RobotMap.LEFT_DRIVE_AXIS), controller.getRawAxis(RobotMap.RIGHT_DRIVE_AXIS));
+    public void joystickDrive(double leftValue, double rightValue) {
+    	drive.tankDrive(leftValue, rightValue);
     }
 }
 

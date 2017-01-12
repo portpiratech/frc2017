@@ -1,7 +1,9 @@
 package org.usfirst.frc.team4804.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team4804.robot.OI;
 import org.usfirst.frc.team4804.robot.Robot;
 import org.usfirst.frc.team4804.robot.RobotMap;
 
@@ -10,9 +12,11 @@ import org.usfirst.frc.team4804.robot.RobotMap;
  */
 public class JoystickDriveCommand extends Command {
 
+	private XboxController driverController;
     public JoystickDriveCommand() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
+        driverController = OI.driverController;
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +25,9 @@ public class JoystickDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.JoystickDrive(RobotMap.DriverController);
+    	double leftValue = this.driverController.getRawAxis(RobotMap.LEFT_DRIVE_AXIS);
+    	double rightValue = this.driverController.getRawAxis(RobotMap.RIGHT_DRIVE_AXIS);
+    	Robot.driveTrain.joystickDrive(leftValue, rightValue);
     }
 
     // Make this return true when this Command no longer needs to run execute()

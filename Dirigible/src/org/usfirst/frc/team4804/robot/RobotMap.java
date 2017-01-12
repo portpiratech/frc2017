@@ -26,8 +26,4 @@ public class RobotMap {
     // number and the module. For example you with a rangefinder:
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
-    
-    public static CANTalon leftTalon = new CANTalon(TANKDRIVE_RIGHT_ID);
-    public static CANTalon RightTalon = new CANTalon(TANKDRIVE_LEFT_ID);
-    public static XboxController DriverController = new XboxController(DRIVER_CONTROLLER_ID);
 }
