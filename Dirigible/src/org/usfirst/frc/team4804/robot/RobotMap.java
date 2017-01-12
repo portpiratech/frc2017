@@ -17,10 +17,13 @@ public class RobotMap {
     // CAN Device IDs
     public static final int TANKDRIVE_RIGHT_ID = 6; //CAN Talon SRX
 	public static final int TANKDRIVE_LEFT_ID = 3; //CAN Talon SRX
+	public static final int SHOOTINGDRIVE_ID = 5; //CAN Talon SRX
 	
 	// Axis Information
 	public static final int LEFT_DRIVE_AXIS = 1;
 	public static final int RIGHT_DRIVE_AXIS = 5;
+
+	public static double shooterSpeed = 1;
     
     // If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:

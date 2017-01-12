@@ -1,8 +1,10 @@
 package org.usfirst.frc.team4804.robot;
 
+import org.usfirst.frc.team4804.robot.commands.ShooterCommand;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.team4804.robot.commands.ExampleCommand;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -37,5 +39,11 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 	
 	public static XboxController driverController = new XboxController(RobotMap.DRIVER_CONTROLLER_ID);
+	
+	Button driverAButton = new JoystickButton(driverController, 1);
+	
+	public OI() {
+		driverAButton.whenPressed(new ShooterCommand());
+	}
 }
 
