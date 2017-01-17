@@ -20,8 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final DriveTrain driveTrain = new DriveTrain(RobotMap.TANKDRIVE_LEFT_ID, RobotMap.TANKDRIVE_RIGHT_ID);
-	public static final Shooter shooter = new Shooter(RobotMap.SHOOTINGDRIVE_ID);
+	public static final DriveTrain driveTrain = new DriveTrain();
+	public static final Shooter shooter = new Shooter();
 	public static OI oi;
 
     Command autonomousCommand;

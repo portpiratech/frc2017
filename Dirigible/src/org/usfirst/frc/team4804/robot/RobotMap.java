@@ -1,9 +1,5 @@
 package org.usfirst.frc.team4804.robot;
 
-import com.ctre.CANTalon;
-
-import edu.wpi.first.wpilibj.XboxController;
-
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
