@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	//public static final DriveTrain driveTrain = new DriveTrain(RobotMap.TANKDRIVE_LEFT_ID, RobotMap.TANKDRIVE_RIGHT_ID);
 	public static final MecanumDriveTrain driveTrain = new MecanumDriveTrain(RobotMap.FRONT_LEFT_ID, RobotMap.REAR_LEFT_ID, RobotMap.FRONT_RIGHT_ID, RobotMap.REAR_RIGHT_ID);
-	public static final ShooterSubsystem shooter = new ShooterSubsystem();
+	//public static final ShooterSubsystem shooter = new ShooterSubsystem();
 	public static OI oi;
 
 	Command autonomousCommand;

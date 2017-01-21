@@ -16,7 +16,7 @@ public class ShooterCommand extends Command {
 	
     public ShooterCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.shooter);
+       // requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -31,18 +31,18 @@ public class ShooterCommand extends Command {
     	
     	if(controller.getAButton()) {
     		double speed = SmartDashboard.getNumber("Speed", RobotMap.shooterSpeed);
-    		Robot.shooter.start(speed);
+    		//Robot.shooter.start(speed);
     		SmartDashboard.putNumber("In getA", speed);
     	}
     	
     	if(controller.getBButton()) {
-    		Robot.shooter.stop();
+    		//Robot.shooter.stop();
     		
     	}
     	
     	if(controller.getYButton()) {
     		double speed = SmartDashboard.getNumber("Speed", RobotMap.shooterSpeed);
-    		Robot.shooter.setSpeed(speed);
+    		//Robot.shooter.setSpeed(speed);
     		SmartDashboard.putNumber("In getY", speed);
     	}
     }
