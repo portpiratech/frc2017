@@ -23,6 +23,9 @@ public class MecanumDriveTrain extends Subsystem {
 	private CANTalon rearRight = new CANTalon(RobotMap.REAR_RIGHT_ID);
 	
 	public MecanumDriveTrain(){
+		frontLeft.setInverted(true);
+		rearLeft.setInverted(true);
+		
 		drive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
 	}
 
