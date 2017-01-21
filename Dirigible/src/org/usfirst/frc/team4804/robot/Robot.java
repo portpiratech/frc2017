@@ -2,9 +2,9 @@
 package org.usfirst.frc.team4804.robot;
 
 import org.usfirst.frc.team4804.robot.commands.ExampleCommand;
-import org.usfirst.frc.team4804.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4804.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team4804.robot.subsystems.Shooter;
+import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
+import org.usfirst.frc.team4804.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,11 +23,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static final DriveTrain driveTrain = new DriveTrain(RobotMap.TANKDRIVE_LEFT_ID, RobotMap.TANKDRIVE_RIGHT_ID);
-	public static final Shooter shooter = new Shooter(RobotMap.SHOOTINGDRIVE_ID);
+	//public static final DriveTrain driveTrain = new DriveTrain(RobotMap.TANKDRIVE_LEFT_ID, RobotMap.TANKDRIVE_RIGHT_ID);
+	public static final MecanumDriveTrain driveTrain = new MecanumDriveTrain(RobotMap.FRONT_LEFT_ID, RobotMap.REAR_LEFT_ID, RobotMap.FRONT_RIGHT_ID, RobotMap.REAR_RIGHT_ID);
+	public static final ShooterSubsystem shooter = new ShooterSubsystem();
 	public static OI oi;
 
-    Command autonomousCommand;
+	Command autonomousCommand;
     SendableChooser chooser;
 
     /**
@@ -40,6 +41,11 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+        SmartDashboard.putNumber("Speed", RobotMap.shooterSpeed);
+        SmartDashboard.putString("WAT", "Is going on");
+        SmartDashboard.putNumber("In getA", 0);
+    	SmartDashboard.putNumber("In getY", 0);
+    	
     }
 	
 	/**

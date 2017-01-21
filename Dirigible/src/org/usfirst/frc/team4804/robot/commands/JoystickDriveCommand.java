@@ -25,9 +25,9 @@ public class JoystickDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double leftValue = this.driverController.getRawAxis(RobotMap.LEFT_DRIVE_AXIS);
-    	double rightValue = this.driverController.getRawAxis(RobotMap.RIGHT_DRIVE_AXIS);
-    	Robot.driveTrain.joystickDrive(leftValue, rightValue);
+    	double leftValue = this.driverController.getRawAxis(RobotMap.LEFT_STICK_Y_AXIS);
+    	double rightValue = this.driverController.getRawAxis(RobotMap.RIGHT_STICK_Y_AXIS);
+ //   	Robot.driveTrain.joystickDrive(leftValue, rightValue);
     }
 
     // Make this return true when this Command no longer needs to run execute()

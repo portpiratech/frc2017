@@ -1,7 +1,5 @@
 package org.usfirst.frc.team4804.robot;
 
-import org.usfirst.frc.team4804.robot.commands.ShooterCommand;
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -43,7 +41,7 @@ public class OI {
 	Button driverAButton = new JoystickButton(driverController, 1);
 	
 	public OI() {
-		driverAButton.whenPressed(new ShooterCommand());
+		
 	}
 }
 
