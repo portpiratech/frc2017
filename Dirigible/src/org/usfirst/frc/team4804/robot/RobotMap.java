@@ -10,10 +10,10 @@ public class RobotMap {
     // Controller number
 	public static final int DRIVER_CONTROLLER_ID = 0;
 	
-    // CAN Device IDs
-    public static final int TANKDRIVE_RIGHT_ID = 6; //CAN Talon SRX
-	public static final int TANKDRIVE_LEFT_ID = 3; //CAN Talon SRX
-	public static final int SHOOTINGDRIVE_ID = 5; //CAN Talon SRX
+    // CAN Device ID;
+    public static final int TANKDRIVE_RIGHT_ID = 1; //CAN Talon SRX
+	public static final int TANKDRIVE_LEFT_ID = 2; //CAN Talon SRX
+	public static final int SHOOTINGDRIVE_ID = 3; //CAN Talon SRX
 	
 	// Axis Information
 	public static final int LEFT_DRIVE_AXIS = 1;
