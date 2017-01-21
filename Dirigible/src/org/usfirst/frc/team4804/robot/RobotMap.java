@@ -7,32 +7,37 @@ package org.usfirst.frc.team4804.robot;
  * floating around.
  */
 public class RobotMap {
-    // Controller number
+    // Controller ID number
 	public static final int DRIVER_CONTROLLER_ID = 0;
+	
+	
 	// CAN Device IDs
-	//RobotMap.FRONT_LEFT_ID, RobotMap.REAR_LEFT_ID, RobotMap.FRONT_RIGHT_ID, RobotMap.REAR_RIGHT_ID
+	//Drive Train:
 	public static final int FRONT_LEFT_ID = 1;
 	public static final int REAR_LEFT_ID = 2;
 	public static final int FRONT_RIGHT_ID = 3;
 	public static final int REAR_RIGHT_ID = 4;
-
-    // CAN Device ID;
-    public static final int TANKDRIVE_RIGHT_ID = 1; //CAN Talon SRX
-	public static final int TANKDRIVE_LEFT_ID = 2; //CAN Talon SRX
+	//Shooter:
 	public static final int SHOOTINGDRIVE_ID = 5; //CAN Talon SRX
-	
-	// Axis Information
-	public static final int LEFT_DRIVE_AXIS = 1;
-	public static final int RIGHT_DRIVE_AXIS = 5;
 
-	// Axis Information
+		
+	
+	// Xbox Controller Axis Information
 	public static final int LEFT_STICK_X_AXIS = 0;
 	public static final int LEFT_STICK_Y_AXIS = 1;
 	public static final int RIGHT_STICK_X_AXIS = 4;
 	public static final int RIGHT_STICK_Y_AXIS = 5;
 
+	public static final double JOYSTICK_TOLERANCE = 0.05;
+	
+	// Shooter
 	public static double shooterSpeed = 0.8;
     
+	
+	//Constants / Multipliers
+	public static final double DRIVE_SPEED_MULTIPLIER = 0.3;
+	
+	
     // If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:
     // public static int rangefinderPort = 1;

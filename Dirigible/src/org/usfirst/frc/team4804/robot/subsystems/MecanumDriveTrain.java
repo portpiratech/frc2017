@@ -1,6 +1,9 @@
 package org.usfirst.frc.team4804.robot.subsystems;
 
+import org.usfirst.frc.team4804.robot.RobotMap;
 import org.usfirst.frc.team4804.robot.commands.MecanumDriveCommand;
+
+import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,8 +17,13 @@ public class MecanumDriveTrain extends Subsystem {
     // here. Call these from Commands.
 	public RobotDrive drive;
 	
-	public MecanumDriveTrain(int frontLeftMotorID, int rearLeftMotorID, int frontRightMotorID, int rearRightMotorID){
-		drive = new RobotDrive(frontLeftMotorID, rearLeftMotorID, frontRightMotorID, rearLeftMotorID);
+	private CANTalon frontLeft = new CANTalon(RobotMap.FRONT_LEFT_ID); 
+	private CANTalon rearLeft = new CANTalon(RobotMap.REAR_LEFT_ID);
+	private CANTalon frontRight = new CANTalon(RobotMap.FRONT_RIGHT_ID);
+	private CANTalon rearRight = new CANTalon(RobotMap.REAR_RIGHT_ID);
+	
+	public MecanumDriveTrain(){
+		drive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
 	}
 
     public void initDefaultCommand() {

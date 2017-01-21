@@ -1,9 +1,10 @@
 package org.usfirst.frc.team4804.robot.commands;
 
 import org.usfirst.frc.team4804.robot.OI;
-import org.usfirst.frc.team4804.robot.Robot;
 import org.usfirst.frc.team4804.robot.RobotMap;
+import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,11 +12,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class MecanumDriveCommand extends Command {
-
+	
+	private MecanumDriveTrain driveTrain = new MecanumDriveTrain();
+	private XboxController driverController = OI.driverController;
+	
     public MecanumDriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+    	requires(driveTrain);
     }
 
     // Called just before this Command runs the first time
@@ -25,17 +29,18 @@ public class MecanumDriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//double leftValue = this.driverController.getRawAxis(RobotMap.LEFT_STICK_Y_AXIS);
-    	double leftx = OI.driverController.getRawAxis(RobotMap.LEFT_STICK_X_AXIS);
-    	double lefty = OI.driverController.getRawAxis(RobotMap.LEFT_STICK_Y_AXIS);
-    	double rightx = OI.driverController.getRawAxis(RobotMap.RIGHT_STICK_X_AXIS);
+    	double leftx = driverController.getRawAxis(RobotMap.LEFT_STICK_X_AXIS);
+    	double lefty = driverController.getRawAxis(RobotMap.LEFT_STICK_Y_AXIS);
+    	double rightx = driverController.getRawAxis(RobotMap.RIGHT_STICK_X_AXIS);
     	//Above code is just to set up more readable variable names.
-    	double magnitude = Math.sqrt(Math.pow(leftx, 2) + Math.pow(lefty,  2));
+    	double magnitude = RobotMap.DRIVE_SPEED_MULTIPLIER * Math.sqrt(Math.pow(leftx, 2) + Math.pow(lefty,  2));
+    	magnitude = checkTolerance(magnitude, RobotMap.JOYSTICK_TOLERANCE);
     	SmartDashboard.putNumber("DriveTrain Magnitude", magnitude);
     	double direction = Math.atan2(lefty, leftx);
     	SmartDashboard.putNumber("Direction", direction);
-    	double rotation = rightx;
+    	double rotation = RobotMap.DRIVE_SPEED_MULTIPLIER * rightx;
     	
-    	Robot.driveTrain.mecanumDrive(magnitude, direction, rotation);
+    	driveTrain.mecanumDrive(magnitude, direction, rotation);
     	
     }
 
@@ -51,5 +56,13 @@ public class MecanumDriveCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    }
+    
+    private double checkTolerance(double input, double tolerance){
+    	if (input < tolerance){
+    		return 0;
+    	}else{
+    		return input;
+    	}
     }
 }
