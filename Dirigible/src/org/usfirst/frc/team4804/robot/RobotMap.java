@@ -7,35 +7,41 @@ package org.usfirst.frc.team4804.robot;
  * floating around.
  */
 public class RobotMap {
-    // Controller ID number
-	public static final int DRIVER_CONTROLLER_ID = 0;
 	
 	
 	// CAN Device IDs
-	//Drive Train:
+	// Drive Train:
 	public static final int FRONT_LEFT_ID = 1;
 	public static final int REAR_LEFT_ID = 2;
 	public static final int FRONT_RIGHT_ID = 3;
 	public static final int REAR_RIGHT_ID = 4;
-	//Shooter:
+	// Shooter:
 	public static final int SHOOTINGDRIVE_ID = 5; //CAN Talon SRX
 
 		
 	
-	// Xbox Controller Axis Information
+	// Xbox Controller Information
+	// Controller IDs:
+	public static final int DRIVER_CONTROLLER_ID = 0;
+	// Joysticks [-1,1]:
 	public static final int LEFT_STICK_X_AXIS = 0;
 	public static final int LEFT_STICK_Y_AXIS = 1;
 	public static final int RIGHT_STICK_X_AXIS = 4;
 	public static final int RIGHT_STICK_Y_AXIS = 5;
-
-	public static final double JOYSTICK_TOLERANCE = 0.05;
-	
-	// Shooter
-	public static double shooterSpeed = 0.8;
+	// Triggers: [0,1]:
+	public static final int LEFT_TRIGGER_AXIS = 2;
+	public static final int RIGHT_TRIGGER_AXIS = 3;
     
 	
-	//Constants / Multipliers
-	public static final double DRIVE_SPEED_MULTIPLIER = 0.3;
+	// Constants / Multipliers / Variables
+	// General:
+	public static double joystickTolerance = 0.15;
+	// DriveTrain:
+	public static double driveSpeedMultiplier = 0.3;
+	public static double driveSpeedDpadMultiplier = 0.8;
+	// Shooter:
+	public static double shooterSpeedMultiplier = 0.8;
+	// Picker-Upper Of Balls (PUOB):
 	
 	
     // If you are using multiple modules, make sure to define both the port

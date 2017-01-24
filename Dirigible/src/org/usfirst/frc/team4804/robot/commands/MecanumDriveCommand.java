@@ -25,48 +25,45 @@ public class MecanumDriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//double leftValue = this.driverController.getRawAxis(RobotMap.LEFT_STICK_Y_AXIS);
+    	//Update multipliers from smartdashboard
+    	RobotMap.driveSpeedMultiplier = SmartDashboard.getNumber("DriveTrain Speed Mult", RobotMap.driveSpeedMultiplier);
+    	RobotMap.driveSpeedDpadMultiplier = SmartDashboard.getNumber("DriveTrain Dpad Mult", RobotMap.driveSpeedDpadMultiplier);
+    	RobotMap.joystickTolerance = SmartDashboard.getNumber("Joystick Tolerance", RobotMap.joystickTolerance);
+    	
+    	double magnitude, direction, rotation;
+    	
+    	int dpad = driverController.getPOV();
     	double leftx = driverController.getRawAxis(RobotMap.LEFT_STICK_X_AXIS);
     	double lefty = driverController.getRawAxis(RobotMap.LEFT_STICK_Y_AXIS);
     	double rightx = driverController.getRawAxis(RobotMap.RIGHT_STICK_X_AXIS);
     	//Above code is just to set up more readable variable names.
-    	double magnitude = RobotMap.DRIVE_SPEED_MULTIPLIER * Math.sqrt(Math.pow(leftx, 2) + Math.pow(lefty,  2));
-    	magnitude = checkTolerance(magnitude, RobotMap.JOYSTICK_TOLERANCE);
-    	SmartDashboard.putNumber("DriveTrain Magnitude", magnitude);
-    	double direction = Math.toDegrees(Math.atan2(lefty, leftx) + Math.PI/2); //Adds pi/2 to establish the proper "forward"
-    	SmartDashboard.putNumber("Direction", direction);
-    	double rotation = RobotMap.DRIVE_SPEED_MULTIPLIER * rightx;
-    	SmartDashboard.putNumber("Rotation", rotation);
     	
-    	int dpad = driverController.getPOV();
-    	
-    	if(dpad != -1) {
-    		switch(dpad) {
-    		case 0:
-    			break;
-    		case 45:
-    			break;
-    		case 90:
-    			break;
-    		case 135:
-    			break;
-    		case 180:
-    			break;
-    		case 225:
-    			break;
-    		case 270:
-    			break;
-    		case 315:
-    			break;
-    		}
+    	if(dpad == -1) {
+	    	magnitude = RobotMap.driveSpeedMultiplier * Math.sqrt(Math.pow(leftx, 2) + Math.pow(lefty,  2));
+	    	magnitude = checkTolerance(magnitude, RobotMap.joystickTolerance);
+	    	SmartDashboard.putNumber("DriveTrain Magnitude", magnitude);
+	    	
+	    	direction = Math.toDegrees(Math.atan2(lefty, leftx) + Math.PI/2); //Adds pi/2 to establish the proper "forward"
+	    	direction = checkTolerance(direction, RobotMap.joystickTolerance);
+	    	SmartDashboard.putNumber("DriveTrain Direction", direction);
+    	} else {
+    		magnitude = RobotMap.driveSpeedMultiplier * RobotMap.driveSpeedDpadMultiplier;
+    		SmartDashboard.putNumber("DriveTrain Magnitude", magnitude);
+    		
+    		direction = dpad;
+    		SmartDashboard.putNumber("DriveTrain Direction", direction);
     	}
     	
-    	driveTrain.mecanumDrive(magnitude, direction, rotation);
+    	rotation = RobotMap.driveSpeedMultiplier * rightx;
+    	rotation = checkTolerance(rotation, RobotMap.joystickTolerance);
+    	SmartDashboard.putNumber("DriveTrain Rotation", rotation);
     	
+    	driveTrain.mecanumDrive(magnitude, direction, rotation);
     }
 
     // Make this return true when this Command no longer needs to run execute()

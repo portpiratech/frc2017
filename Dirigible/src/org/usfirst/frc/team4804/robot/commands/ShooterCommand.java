@@ -30,7 +30,7 @@ public class ShooterCommand extends Command {
     	SmartDashboard.putNumber("In getY", 0);
     	
     	if(controller.getAButton()) {
-    		double speed = SmartDashboard.getNumber("Speed", RobotMap.shooterSpeed);
+    		double speed = SmartDashboard.getNumber("Speed", RobotMap.shooterSpeedMultiplier);
     		//Robot.shooter.start(speed);
     		SmartDashboard.putNumber("In getA", speed);
     	}
@@ -41,7 +41,7 @@ public class ShooterCommand extends Command {
     	}
     	
     	if(controller.getYButton()) {
-    		double speed = SmartDashboard.getNumber("Speed", RobotMap.shooterSpeed);
+    		double speed = SmartDashboard.getNumber("Speed", RobotMap.shooterSpeedMultiplier);
     		//Robot.shooter.setSpeed(speed);
     		SmartDashboard.putNumber("In getY", speed);
     	}
