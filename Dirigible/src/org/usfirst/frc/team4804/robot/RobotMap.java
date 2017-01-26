@@ -40,7 +40,7 @@ public class RobotMap {
 	public static double driveSpeedMultiplier = 0.3;
 	public static double driveSpeedDpadMultiplier = 0.8;
 	// Shooter:
-	public static double shooterSpeedMultiplier = 0.8;
+	public static double shooterSpeedMultiplier = 0.5;
 	// Picker-Upper Of Balls (PUOB):
 	
 	

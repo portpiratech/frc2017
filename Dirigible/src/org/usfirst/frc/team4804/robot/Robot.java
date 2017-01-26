@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
         
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
-        SmartDashboard.putNumber("Shooter Speed Mult", RobotMap.shooterSpeedMultiplier);
+        SmartDashboard.putNumber("Shooter Speed", RobotMap.shooterSpeedMultiplier);
         SmartDashboard.putNumber("DriveTrain Speed Mult", RobotMap.driveSpeedMultiplier);
         SmartDashboard.putNumber("DriveTrain Dpad Mult", RobotMap.driveSpeedDpadMultiplier);
         SmartDashboard.putNumber("Joystick Tolerance", RobotMap.joystickTolerance);
