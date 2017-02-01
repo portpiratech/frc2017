@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4804.robot.commands;
 
 import org.usfirst.frc.team4804.robot.Robot;
-import org.usfirst.frc.team4804.robot.RobotMap;
+import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,41 +10,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class ShooterCommand extends Command {
+public class GyroCommand extends Command {
 
-	XboxController controller = new XboxController(RobotMap.DRIVER_CONTROLLER_ID);
+	private GyroSubsystem gyroSubsystem = Robot.gyro;
+	XboxController driverController = Robot.oi.driverController;
 	
-    public ShooterCommand() {
+    public GyroCommand() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.shooter);
+        // eg. requires(chassis);
+    	requires(gyroSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute(){
-    	
-    	SmartDashboard.putNumber("In getA", 0);
-    	SmartDashboard.putNumber("In getY", 0);
-    	
-    	if(controller.getAButton()) {
-    		double speed = SmartDashboard.getNumber("Shooter Speed", RobotMap.shooterSpeedMultiplier);
-    		Robot.shooter.shoot(speed);
-    		SmartDashboard.putNumber("In getA", speed);
+    protected void execute() {
+    	if (driverController.getAButton()){
+    		gyroSubsystem.reset();
     	}
     	
-    	if(controller.getBButton()) {
-    		Robot.shooter.stop();
-    		
-    	}
-    	
-    	/*if(controller.getYButton()) {
-    		double speed = SmartDashboard.getNumber("Speed", RobotMap.shooterSpeedMultiplier);
-    		//Robot.shooter.setSpeed(speed);
-    		SmartDashboard.putNumber("In getY", speed);
-    	}*/
+    	SmartDashboard.putNumber("Angle: ", gyroSubsystem.getAngle());
+    	SmartDashboard.putNumber("Rate: ", gyroSubsystem.getRate());
     }
 
     // Make this return true when this Command no longer needs to run execute()
