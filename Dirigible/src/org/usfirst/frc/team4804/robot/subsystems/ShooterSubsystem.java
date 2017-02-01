@@ -5,12 +5,15 @@ import org.usfirst.frc.team4804.robot.commands.ShooterCommand;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
 public class ShooterSubsystem extends Subsystem {
+	
+	
 
 	CANTalon shooterMotor = new CANTalon(RobotMap.SHOOTINGDRIVE_ID);
     // Put methods for controlling this subsystem
@@ -32,5 +35,7 @@ public class ShooterSubsystem extends Subsystem {
     public void stop() {
     	shooterMotor.set(0.0);
     }
+    
+   
 }
 

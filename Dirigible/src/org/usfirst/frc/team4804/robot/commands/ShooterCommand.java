@@ -26,8 +26,11 @@ public class ShooterCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
+    	double distance = Robot.shooter.getDistance();
+    	
     	SmartDashboard.putNumber("In getA", 0);
     	SmartDashboard.putNumber("In getY", 0);
+    	SmartDashboard.putNumber("Range", distance);
     	
     	if(controller.getAButton()) {
     		double speed = SmartDashboard.getNumber("Shooter Speed", RobotMap.shooterSpeedMultiplier);

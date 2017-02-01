@@ -31,7 +31,7 @@ public class RobotMap {
 	// Triggers: [0,1]:
 	public static final int LEFT_TRIGGER_AXIS = 2;
 	public static final int RIGHT_TRIGGER_AXIS = 3;
-    
+    public static final int ULTRA_ANALOG_ID = 0;
 	
 	// Constants / Multipliers / Variables
 	// General:
@@ -40,7 +40,7 @@ public class RobotMap {
 	public static double driveSpeedMultiplier = 0.3;
 	public static double driveSpeedDpadMultiplier = 0.8;
 	// Shooter:
-	public static double shooterSpeedMultiplier = 0.5;
+	public static double shooterSpeedMultiplier = -0.75;
 	// Picker-Upper Of Balls (PUOB):
 	
 	
