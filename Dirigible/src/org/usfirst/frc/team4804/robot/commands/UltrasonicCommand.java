@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class UltrasoundCommand extends Command {
+public class UltrasonicCommand extends Command {
 
 	private UltrasonicSubsystem ultrasonic = Robot.ultrasonic;
 	
-    public UltrasoundCommand() {
+    public UltrasonicCommand() {
         // Use requires() here to declare subsystem dependencies
         requires(ultrasonic);
     }

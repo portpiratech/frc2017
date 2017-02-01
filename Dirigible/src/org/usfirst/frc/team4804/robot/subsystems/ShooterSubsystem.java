@@ -14,10 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class ShooterSubsystem extends Subsystem {
-	
-	
-	 
-	
+
 	private CANTalon shooterMotor = new CANTalon(RobotMap.SHOOTINGDRIVE_ID);
 	
     // Put methods for controlling this subsystem

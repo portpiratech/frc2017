@@ -35,8 +35,12 @@ public class MecanumDriveTrain extends Subsystem {
     	setDefaultCommand(new MecanumDriveCommand());
     }
     
-    public void mecanumDrive(double magnitude, double direction, double rotation){
+    public void mecanumDrivePolar(double magnitude, double direction, double rotation){
     	drive.mecanumDrive_Polar(magnitude, direction, rotation);
+    }
+    
+    public void mecanumDriveCartesian(double xSpeed, double ySpeed, double rotation, double gyroAngle) {
+    	drive.mecanumDrive_Cartesian(xSpeed, ySpeed, rotation, gyroAngle);
     }
 }
 

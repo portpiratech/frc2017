@@ -3,7 +3,9 @@ package org.usfirst.frc.team4804.robot.commands;
 import org.usfirst.frc.team4804.robot.OI;
 import org.usfirst.frc.team4804.robot.Robot;
 import org.usfirst.frc.team4804.robot.RobotMap;
+import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
+import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
@@ -15,12 +17,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class MecanumDriveCommand extends Command {
 	
 	private MecanumDriveTrain driveTrain = Robot.driveTrain;
+	private GyroSubsystem gyro = Robot.gyro;
+	private UltrasonicSubsystem ultrasonic = Robot.ultrasonic;
 	private XboxController driverController = OI.driverController;
 	
     public MecanumDriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(driveTrain);
+    	requires(gyro);
+    	requires(ultrasonic);
     }
 
     // Called just before this Command runs the first time
@@ -63,7 +69,7 @@ public class MecanumDriveCommand extends Command {
     	rotation = checkTolerance(rotation, RobotMap.joystickTolerance);
     	SmartDashboard.putNumber("DriveTrain Rotation", rotation);
     	
-    	driveTrain.mecanumDrive(magnitude, direction, rotation);
+    	driveTrain.mecanumDrivePolar(magnitude, direction, rotation);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -80,11 +86,19 @@ public class MecanumDriveCommand extends Command {
     protected void interrupted() {
     }
     
-    private double checkTolerance(double input, double tolerance){
-    	if (Math.abs(input) < tolerance){
+    private double checkTolerance(double input, double tolerance) {
+    	if (Math.abs(input) < tolerance) {
     		return 0;
-    	}else{
+    	} else {
     		return input;
     	}
+    }
+    
+    void driveForwardToDistance(double distanceMeters) {
+    	while(ultrasonic.getAverageVoltage() - distanceMeters < 0.2) { //drive to within 20 cm
+    		double speed = RobotMap.driveSpeedMultiplier * (ultrasonic.getAverageVoltage() - distanceMeters) * 0.4;
+    		driveTrain.mecanumDriveCartesian(0, speed, 0, gyro.getAngle());
+    	}
+    	
     }
 }

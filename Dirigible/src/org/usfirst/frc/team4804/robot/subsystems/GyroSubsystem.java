@@ -14,7 +14,7 @@ public class GyroSubsystem extends Subsystem {
     // here. Call these from Commands.
 	ADXRS450_Gyro gyro;
 	
-	public GyroSubsystem(){
+	public GyroSubsystem() {
 		gyro = new ADXRS450_Gyro();
 		
     	gyro.calibrate();
@@ -26,15 +26,16 @@ public class GyroSubsystem extends Subsystem {
     	setDefaultCommand(new GyroCommand());
     }
     
-    public void reset(){
+    public void reset() {
     	gyro.reset();
     }
 
     
-    public double getAngle(){
+    public double getAngle() {
     	return gyro.getAngle();
     }
-    public double getRate(){
+    
+    public double getRate() {
     	return gyro.getRate();
     }
     
