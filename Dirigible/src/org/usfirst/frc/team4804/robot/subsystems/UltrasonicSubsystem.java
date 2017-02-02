@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4804.robot.subsystems;
 
+import java.text.DecimalFormat;
+
 import org.usfirst.frc.team4804.robot.RobotMap;
 import org.usfirst.frc.team4804.robot.commands.UltrasonicCommand;
 
@@ -27,8 +29,16 @@ public class UltrasonicSubsystem extends Subsystem {
     public double getVoltage(){
     	return ultrasonic.getVoltage();
     }
+    
     public double getAverageVoltage(){
     	return ultrasonic.getAverageVoltage();
+    }
+    
+    public double getDistance(){ //returns distance in meters rounded to 100th place
+    	double voltage = ultrasonic.getAverageVoltage();
+    	DecimalFormat d = new DecimalFormat("##.00");
+    	return Double.valueOf(d.format(1024 * voltage / 1000));
+    	//5 mm per (Vcc/1024)
     }
 }
 

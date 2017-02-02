@@ -17,6 +17,9 @@ public class RobotMap {
 	public static final int REAR_RIGHT_ID = 4;
 	// Shooter:
 	public static final int SHOOTINGDRIVE_ID = 5; //CAN Talon SRX
+	
+	// Other Device IDs
+	public static final int ULTRASONIC_ANALOG_ID = 0;
 
 		
 	
@@ -28,12 +31,11 @@ public class RobotMap {
 	public static final int LEFT_STICK_Y_AXIS = 1;
 	public static final int RIGHT_STICK_X_AXIS = 4;
 	public static final int RIGHT_STICK_Y_AXIS = 5;
-	// Triggers: [0,1]:
+	// Triggers [0,1]:
 	public static final int LEFT_TRIGGER_AXIS = 2;
 	public static final int RIGHT_TRIGGER_AXIS = 3;
 	
 	
-    public static final int ULTRASONIC_ANALOG_ID = 0;
 	
 	// Constants / Multipliers / Variables
 	// General:
@@ -41,11 +43,17 @@ public class RobotMap {
 	// DriveTrain:
 	public static double driveSpeedMultiplier = 0.3;
 	public static double driveSpeedDpadMultiplier = 0.8;
+	public static double autoApproachSpeedMultiplier = 0.50;
+	public static double distanceToleranceMeters = 0.02;
+	public static double distanceSetpointMeters = 0.5;
 	// Shooter:
 	public static double shooterSpeedMultiplier = -0.75;
 	// Picker-Upper Of Balls (PUOB):
+	// Ben's Excellent Climber Contraption Ingenious or something (BECCI):
 	
 	
+	
+	////
     // If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:
     // public static int rangefinderPort = 1;

@@ -27,11 +27,11 @@ public class UltrasonicCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double voltage = ultrasonic.getVoltage();
-    	SmartDashboard.putNumber("Ultrasound Voltage", voltage);
-    	SmartDashboard.putNumber("Average voltage", ultrasonic.getAverageVoltage());
-    	SmartDashboard.putNumber("Ultrasound Distance", getDistance());
+    	SmartDashboard.putNumber("Ultrasonic Voltage", voltage);
+    	SmartDashboard.putNumber("Ultrasonic Average Voltage", ultrasonic.getAverageVoltage());
+    	SmartDashboard.putNumber("Ultrasonic Distance", ultrasonic.getDistance());
     	
-    	double distance = getDistance();
+    	double distance = ultrasonic.getDistance();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -46,12 +46,5 @@ public class UltrasonicCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    }
-    
-    private double getDistance(){ //returns distance in meters rounded to 100th place
-    	double voltage = ultrasonic.getAverageVoltage();
-    	DecimalFormat d = new DecimalFormat("##.00");
-    	return Double.valueOf(d.format(1024 * voltage / 1000));
-    	//5 mm per (Vcc/1024)
     }
 }

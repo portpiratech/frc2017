@@ -36,11 +36,27 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 	
+	
+	//Create driver controller and all of its associated buttons.
 	public static XboxController driverController = new XboxController(RobotMap.DRIVER_CONTROLLER_ID);
 	
-	Button driverAButton = new JoystickButton(driverController, 1);
+	Button driverAButton = new JoystickButton(driverController, 0),
+			driverBButton = new JoystickButton(driverController, 1),
+			driverXButton = new JoystickButton(driverController, 2),
+			driverYButton = new JoystickButton(driverController, 3),
+			driverLeftBumper = new JoystickButton(driverController, 4),
+			driverRightBumper = new JoystickButton(driverController, 5),
+			driverBackButton = new JoystickButton(driverController, 6),
+			driverStartButton = new JoystickButton(driverController, 7),
+			driverLeftStickPress = new JoystickButton(driverController, 8),
+			driverRightStickPress = new JoystickButton(driverController, 9);
+			
+			
 	
 	public OI() {
+		// driverYButton.whileHeld(new DriveToDistance());
+		// driverLeftBumper.whenPressed(new GyroReset());
+		
 		
 	}
 }

@@ -47,7 +47,10 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Shooter Speed", RobotMap.shooterSpeedMultiplier);
         SmartDashboard.putNumber("DriveTrain Speed Mult", RobotMap.driveSpeedMultiplier);
         SmartDashboard.putNumber("DriveTrain Dpad Mult", RobotMap.driveSpeedDpadMultiplier);
+        SmartDashboard.putNumber("DriveTrain Auto Approach Mult", RobotMap.autoApproachSpeedMultiplier);
         SmartDashboard.putNumber("Joystick Tolerance", RobotMap.joystickTolerance);
+        SmartDashboard.putNumber("Distance Tolerance", RobotMap.distanceToleranceMeters);
+        SmartDashboard.putNumber("Distance Setpoint", RobotMap.distanceSetpointMeters);
         
         SmartDashboard.putNumber("In getA", 0);
     	SmartDashboard.putNumber("In getY", 0);
