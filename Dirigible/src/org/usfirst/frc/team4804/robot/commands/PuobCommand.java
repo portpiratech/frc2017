@@ -1,23 +1,26 @@
 package org.usfirst.frc.team4804.robot.commands;
 
-import java.text.DecimalFormat;
-
+import org.usfirst.frc.team4804.robot.OI;
 import org.usfirst.frc.team4804.robot.Robot;
-import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class UltrasonicCommand extends Command {
+public class PuobCommand extends Command {
 
-	private UltrasonicSubsystem ultrasonic = Robot.ultrasonic;
 	
-    public UltrasonicCommand() {
+	private XboxController operatorController = OI.operatorController;
+	private boolean motorOn;
+	
+    public PuobCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(ultrasonic);
+        // eg. requires(chassis);
+    	requires(Robot.puob);
+    	motorOn = false;
     }
 
     // Called just before this Command runs the first time
@@ -26,12 +29,19 @@ public class UltrasonicCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double voltage = ultrasonic.getVoltage();
-    	SmartDashboard.putNumber("Ultrasonic Voltage", voltage);
-    	SmartDashboard.putNumber("Ultrasonic Average Voltage", ultrasonic.getAverageVoltage());
-    	SmartDashboard.putNumber("Ultrasonic Distance", ultrasonic.getDistance());
+    	//Toggle motor
+    	if (operatorController.getBumper(Hand.kLeft)) {
+    		motorOn = true;
+    	} else if (operatorController.getBumper(Hand.kRight)) {
+    		motorOn = false;
+    	}
     	
-    	double distance = ultrasonic.getDistance();
+    	if (motorOn) {
+    		Robot.puob.setMotor(1);
+    	} else {
+    		Robot.puob.setMotor(0);
+    	}
+
     }
 
     // Make this return true when this Command no longer needs to run execute()

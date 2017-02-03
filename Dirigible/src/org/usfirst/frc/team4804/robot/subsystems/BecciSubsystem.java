@@ -1,35 +1,34 @@
 package org.usfirst.frc.team4804.robot.subsystems;
 
 import org.usfirst.frc.team4804.robot.RobotMap;
-import org.usfirst.frc.team4804.robot.commands.ShooterCommand;
+import org.usfirst.frc.team4804.robot.commands.BecciCommand;
 
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Climber Subsystem (B.E.C.C.I. = Ben's Extraordinary Climbing Contraption Ingenious)
  */
-public class ShooterSubsystem extends Subsystem {
+public class BecciSubsystem extends Subsystem {
 
-	private CANTalon shooterMotor = new CANTalon(RobotMap.SHOOTINGDRIVE_ID);
-	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
+	CANTalon becciMotor = new CANTalon(RobotMap.CLIMB_MOTOR_1_ID);
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new ShooterCommand());
+    	setDefaultCommand(new BecciCommand());
     }
     
-    public void shoot(double speed) {
-    	shooterMotor.set(speed);
+    public void climb(double power) {
+    	becciMotor.set(power);
     }
     
-    public void stop() {
-    	shooterMotor.set(0);
+    public void stopClimb() {
+    	becciMotor.set(0);
     }
-
-   
 }
+

@@ -50,8 +50,22 @@ public class OI {
 			driverStartButton = new JoystickButton(driverController, 7),
 			driverLeftStickPress = new JoystickButton(driverController, 8),
 			driverRightStickPress = new JoystickButton(driverController, 9);
-			
-			
+
+
+	
+	public static XboxController operatorController = new XboxController(RobotMap.OPERATOR_CONTROLLER_ID);
+	
+	Button operatorAButton = new JoystickButton(operatorController, 0),
+			operatorBButton = new JoystickButton(operatorController, 1),
+			operatorXButton = new JoystickButton(operatorController, 2),
+			operatorYButton = new JoystickButton(operatorController, 3),
+			operatorLeftBumper = new JoystickButton(operatorController, 4),
+			operatorRightBumper = new JoystickButton(operatorController, 5),
+			operatorBackButton = new JoystickButton(operatorController, 6),
+			operatorStartButton = new JoystickButton(operatorController, 7),
+			operatorLeftStickPress = new JoystickButton(operatorController, 8),
+			operatorRightStickPress = new JoystickButton(operatorController, 9);
+	
 	
 	public OI() {
 		// driverYButton.whileHeld(new DriveToDistance());

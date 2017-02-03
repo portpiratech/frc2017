@@ -1,7 +1,5 @@
 package org.usfirst.frc.team4804.robot.commands;
 
-import java.text.DecimalFormat;
-
 import org.usfirst.frc.team4804.robot.OI;
 import org.usfirst.frc.team4804.robot.Robot;
 import org.usfirst.frc.team4804.robot.RobotMap;
@@ -9,8 +7,8 @@ import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
 import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

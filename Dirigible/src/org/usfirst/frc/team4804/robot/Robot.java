@@ -1,8 +1,10 @@
 
 package org.usfirst.frc.team4804.robot;
 
+import org.usfirst.frc.team4804.robot.subsystems.BecciSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
+import org.usfirst.frc.team4804.robot.subsystems.PuobSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
 
@@ -29,6 +31,8 @@ public class Robot extends IterativeRobot {
 	public static final MecanumDriveTrain driveTrain = new MecanumDriveTrain();
 	public static final GyroSubsystem gyro = new GyroSubsystem();
 	public static final UltrasonicSubsystem ultrasonic = new UltrasonicSubsystem();
+	public static final PuobSubsystem puob = new PuobSubsystem();
+	public static final BecciSubsystem becci = new BecciSubsystem();
 	public static OI oi;
 
 	Command autonomousCommand;

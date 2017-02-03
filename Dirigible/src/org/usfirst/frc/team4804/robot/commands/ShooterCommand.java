@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4804.robot.commands;
 
+import org.usfirst.frc.team4804.robot.OI;
 import org.usfirst.frc.team4804.robot.Robot;
 import org.usfirst.frc.team4804.robot.RobotMap;
 
@@ -12,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShooterCommand extends Command {
 
-	XboxController controller = new XboxController(RobotMap.DRIVER_CONTROLLER_ID);
+	XboxController operatorController = OI.operatorController;
 	
     public ShooterCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -26,18 +27,13 @@ public class ShooterCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute(){
     	
-    	SmartDashboard.putNumber("In getA", 0);
-    	SmartDashboard.putNumber("In getY", 0);
-    	
-    	if(controller.getAButton()) {
+    	if(operatorController.getAButton()) {
     		double speed = SmartDashboard.getNumber("Shooter Speed", RobotMap.shooterSpeedMultiplier);
     		Robot.shooter.shoot(speed);
-    		SmartDashboard.putNumber("In getA", speed);
     	}
     	
-    	if(controller.getBButton()) {
+    	if(operatorController.getBButton()) {
     		Robot.shooter.stop();
-    		
     	}
     	
     	/*if(controller.getYButton()) {

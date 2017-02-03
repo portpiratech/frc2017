@@ -1,6 +1,6 @@
 package org.usfirst.frc.team4804.robot.subsystems;
 
-import org.usfirst.frc.team4804.robot.commands.GyroCommand;
+import org.usfirst.frc.team4804.robot.commands.MecanumDriveCommand;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,7 +23,7 @@ public class GyroSubsystem extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new GyroCommand());
+    	setDefaultCommand(new MecanumDriveCommand());
     }
     
     public void reset() {

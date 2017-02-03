@@ -1,9 +1,9 @@
 package org.usfirst.frc.team4804.robot.commands;
 
+import org.usfirst.frc.team4804.robot.OI;
 import org.usfirst.frc.team4804.robot.Robot;
-import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
+import org.usfirst.frc.team4804.robot.subsystems.BecciSubsystem;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,30 +11,40 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class GyroCommand extends Command {
-
-	private GyroSubsystem gyroSubsystem = Robot.gyro;
-	XboxController driverController = Robot.oi.driverController;
+public class BecciCommand extends Command {
 	
-    public GyroCommand() {
+	private XboxController operatorController = OI.operatorController;
+	private BecciSubsystem becci = Robot.becci;
+	double motorSpeed = 0;
+	
+    public BecciCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(gyroSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (driverController.getBumper(Hand.kLeft)) {
-    		gyroSubsystem.reset();
+    	//While X is held, increase the speed. Otherwise, hold speed.
+    	while(operatorController.getXButton()) {
+    		if(motorSpeed <= 1) {
+    			motorSpeed += 0.01;
+    		}
+    		becci.climb(motorSpeed);
+    		
+    		SmartDashboard.putNumber("Becci Speed", motorSpeed);
     	}
     	
-    	SmartDashboard.putNumber("Gyro Angle: ", gyroSubsystem.getAngle());
-    	SmartDashboard.putNumber("Gyro Rate: ", gyroSubsystem.getRate());
+    	//If Y is pressed, stop the Becci and reset the speed.
+    	if(operatorController.getYButton()) {
+    		motorSpeed = 0;
+    		becci.climb(0);
+    	}
+    	
+    	SmartDashboard.putNumber("Becci Speed", motorSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

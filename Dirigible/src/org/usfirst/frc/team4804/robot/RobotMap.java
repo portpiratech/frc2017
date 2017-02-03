@@ -9,14 +9,18 @@ package org.usfirst.frc.team4804.robot;
 public class RobotMap {
 	
 	
-	// CAN Device IDs
+	// CAN Device IDs (CAN Talon SRX)
 	// Drive Train:
 	public static final int FRONT_LEFT_ID = 1;
 	public static final int REAR_LEFT_ID = 2;
 	public static final int FRONT_RIGHT_ID = 3;
 	public static final int REAR_RIGHT_ID = 4;
 	// Shooter:
-	public static final int SHOOTINGDRIVE_ID = 5; //CAN Talon SRX
+	public static final int SHOOTINGDRIVE_ID = 5;
+	// Puob ID:
+	public static final int PUOB_ID = 6;
+	// Becci (climber) IDs:
+	public static final int CLIMB_MOTOR_1_ID = 7;
 	
 	// Other Device IDs
 	public static final int ULTRASONIC_ANALOG_ID = 0;
@@ -26,6 +30,7 @@ public class RobotMap {
 	// Xbox Controller Information
 	// Controller IDs:
 	public static final int DRIVER_CONTROLLER_ID = 0;
+	public static final int OPERATOR_CONTROLLER_ID = 1;
 	// Joysticks [-1,1]:
 	public static final int LEFT_STICK_X_AXIS = 0;
 	public static final int LEFT_STICK_Y_AXIS = 1;

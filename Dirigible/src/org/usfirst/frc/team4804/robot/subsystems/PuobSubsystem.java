@@ -1,35 +1,29 @@
 package org.usfirst.frc.team4804.robot.subsystems;
 
 import org.usfirst.frc.team4804.robot.RobotMap;
-import org.usfirst.frc.team4804.robot.commands.ShooterCommand;
+import org.usfirst.frc.team4804.robot.commands.PuobCommand;
 
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * P.U.O.B. = Picker Upper Of Balls
  */
-public class ShooterSubsystem extends Subsystem {
+public class PuobSubsystem extends Subsystem {
 
-	private CANTalon shooterMotor = new CANTalon(RobotMap.SHOOTINGDRIVE_ID);
-	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	
+	private CANTalon puobMotor = new CANTalon(RobotMap.PUOB_ID);
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new ShooterCommand());
+    	setDefaultCommand(new PuobCommand());
     }
     
-    public void shoot(double speed) {
-    	shooterMotor.set(speed);
+    public void setMotor(double power){
+    	puobMotor.set(power);
     }
-    
-    public void stop() {
-    	shooterMotor.set(0);
-    }
-
-   
 }
+
