@@ -22,7 +22,7 @@ public class PuobSubsystem extends Subsystem {
     	setDefaultCommand(new PuobCommand());
     }
     
-    public void setMotor(double power){
+    public void startPuob(double power){
     	puobMotor.set(power);
     }
 }

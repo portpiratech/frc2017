@@ -17,6 +17,7 @@ public class RobotMap {
 	public static final int REAR_RIGHT_ID = 4;
 	// Shooter:
 	public static final int SHOOTINGDRIVE_ID = 5;
+	public static final int AGITATOR_ID = 8;
 	// Puob ID:
 	public static final int PUOB_ID = 6;
 	// Becci (climber) IDs:
@@ -24,6 +25,7 @@ public class RobotMap {
 	
 	// Other Device IDs
 	public static final int ULTRASONIC_ANALOG_ID = 0;
+	// (Servos???)
 
 		
 	
@@ -53,6 +55,7 @@ public class RobotMap {
 	public static double distanceSetpointMeters = 0.5;
 	// Shooter:
 	public static double shooterSpeedMultiplier = -0.75;
+	public static double agitatorSpeedMultiplier = 0.16; //We are going at 16 speed
 	// Picker-Upper Of Balls (PUOB):
 	// Ben's Excellent Climber Contraption Ingenious or something (BECCI):
 	

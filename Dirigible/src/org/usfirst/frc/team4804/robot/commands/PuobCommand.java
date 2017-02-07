@@ -37,9 +37,9 @@ public class PuobCommand extends Command {
     	}
     	
     	if (motorOn) {
-    		Robot.puob.setMotor(1);
+    		Robot.puob.startPuob(1);
     	} else {
-    		Robot.puob.setMotor(0);
+    		Robot.puob.startPuob(0);
     	}
 
     }

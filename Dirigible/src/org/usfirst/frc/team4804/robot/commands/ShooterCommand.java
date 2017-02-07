@@ -28,12 +28,16 @@ public class ShooterCommand extends Command {
     protected void execute(){
     	
     	if(operatorController.getAButton()) {
-    		double speed = SmartDashboard.getNumber("Shooter Speed", RobotMap.shooterSpeedMultiplier);
-    		Robot.shooter.shoot(speed);
+    		double shooterSpeed = SmartDashboard.getNumber("Shooter Speed", RobotMap.shooterSpeedMultiplier);
+    		Robot.shooter.startShooter(shooterSpeed);
+    		
+    		double agitatorSpeed = SmartDashboard.getNumber("Agitator Speed", RobotMap.agitatorSpeedMultiplier);
+    		Robot.shooter.startAgitator(agitatorSpeed);
     	}
     	
     	if(operatorController.getBButton()) {
-    		Robot.shooter.stop();
+    		Robot.shooter.stopShooter();
+    		Robot.shooter.stopAgitator();
     	}
     	
     	/*if(controller.getYButton()) {

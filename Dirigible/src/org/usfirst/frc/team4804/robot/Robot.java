@@ -1,12 +1,22 @@
 
 package org.usfirst.frc.team4804.robot;
 
+import org.opencv.imgproc.Imgproc;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
+
 import org.usfirst.frc.team4804.robot.subsystems.BecciSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
 import org.usfirst.frc.team4804.robot.subsystems.PuobSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
+
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -43,6 +53,26 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    
+    	new Thread(() -> {
+    		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    		camera.setResolution(640, 480);
+    		
+    		CvSink  cvSink = CameraServer.getInstance().getVideo();
+    		CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+    	
+    		Mat source = new Mat();
+    		Mat output = new Mat();
+    		
+    		while(!Thread.interrupted()){
+    			cvSink.grabFrame(source);
+    			Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+    			outputStream.putFrame(output);
+    		}
+    		
+    	}).start();
+    	
+    	
 		oi = new OI();
         chooser = new SendableChooser();
         
@@ -60,7 +90,8 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("In getY", 0);
     	
     }
-	
+    
+
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when

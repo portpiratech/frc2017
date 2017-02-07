@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ShooterSubsystem extends Subsystem {
 
 	private CANTalon shooterMotor = new CANTalon(RobotMap.SHOOTINGDRIVE_ID);
+	private CANTalon agitatorMotor = new CANTalon(RobotMap.AGITATOR_ID);
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -23,13 +24,19 @@ public class ShooterSubsystem extends Subsystem {
     	setDefaultCommand(new ShooterCommand());
     }
     
-    public void shoot(double speed) {
+    public void startShooter(double speed) {
     	shooterMotor.set(speed);
     }
     
-    public void stop() {
+    public void stopShooter() {
     	shooterMotor.set(0);
     }
-
-   
+    
+    public void startAgitator(double speed) {
+    	agitatorMotor.set(speed);
+    }
+    
+    public void stopAgitator() {
+    	agitatorMotor.set(0);
+    }
 }
