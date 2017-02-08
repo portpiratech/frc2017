@@ -12,15 +12,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class PuobCommand extends Command {
 
-	
 	private XboxController operatorController = OI.operatorController;
-	private boolean motorOn;
 	
     public PuobCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.puob);
-    	motorOn = false;
     }
 
     // Called just before this Command runs the first time
@@ -31,15 +28,11 @@ public class PuobCommand extends Command {
     protected void execute() {
     	//Toggle motor
     	if (operatorController.getBumper(Hand.kLeft)) {
-    		motorOn = true;
-    	} else if (operatorController.getBumper(Hand.kRight)) {
-    		motorOn = false;
+    		Robot.puob.startPuob();
     	}
     	
-    	if (motorOn) {
-    		Robot.puob.startPuob(1);
-    	} else {
-    		Robot.puob.startPuob(0);
+    	if (operatorController.getBumper(Hand.kRight)) {
+    		Robot.puob.stopPuob();
     	}
 
     }

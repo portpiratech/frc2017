@@ -25,5 +25,13 @@ public class PuobSubsystem extends Subsystem {
     public void startPuob(double power){
     	puobMotor.set(power);
     }
+    
+    public void startPuob() {
+    	puobMotor.set(1);
+    }
+    
+    public void stopPuob() {
+    	puobMotor.set(0);
+    }
 }
 

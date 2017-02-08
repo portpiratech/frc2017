@@ -24,8 +24,9 @@ public class RobotMap {
 	public static final int CLIMB_MOTOR_1_ID = 7;
 	
 	// Other Device IDs
-	public static final int ULTRASONIC_ANALOG_ID = 0;
+	public static final int ULTRASONIC_ANALOG_ID = 0; //Analog In
 	// (Servos???)
+	public static final int BALLGATE_SERVO_ID = 0; //PWM
 
 		
 	
@@ -55,9 +56,12 @@ public class RobotMap {
 	public static double distanceSetpointMeters = 0.5;
 	// Shooter:
 	public static double shooterSpeedMultiplier = -0.75;
-	public static double agitatorSpeedMultiplier = 0.16; //We are going at 16 speed
+	public static double agitatorSpeedMultiplier = 0.16; //"We are going at 16 speed"
+	public static double servoUpPos = 90; //need to fine-tune
+	public static double servoDownPos = 0;
 	// Picker-Upper Of Balls (PUOB):
 	// Ben's Excellent Climber Contraption Ingenious or something (BECCI):
+	public static double maxBecciCurrent = 300000000; //Amperes
 	
 	
 	

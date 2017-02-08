@@ -23,12 +23,16 @@ public class BecciSubsystem extends Subsystem {
     	setDefaultCommand(new BecciCommand());
     }
     
-    public void climb(double power) {
+    public void startClimb(double power) {
     	becciMotor.set(power);
     }
     
     public void stopClimb() {
     	becciMotor.set(0);
+    }
+    
+    public double getCurrent() {
+    	return becciMotor.getOutputCurrent();
     }
 }
 

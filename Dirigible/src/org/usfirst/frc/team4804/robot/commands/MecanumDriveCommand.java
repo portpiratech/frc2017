@@ -20,6 +20,7 @@ public class MecanumDriveCommand extends Command {
 	private MecanumDriveTrain driveTrain = Robot.driveTrain;
 	private GyroSubsystem gyro = Robot.gyro;
 	private UltrasonicSubsystem ultrasonic = Robot.ultrasonic;
+	
 	private XboxController driverController = OI.driverController;
 	
 	boolean polarControl = false;

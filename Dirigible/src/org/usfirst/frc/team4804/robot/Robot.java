@@ -1,23 +1,20 @@
 
 package org.usfirst.frc.team4804.robot;
 
-import org.opencv.imgproc.Imgproc;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team4804.robot.subsystems.BecciSubsystem;
+import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
+import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
+import org.usfirst.frc.team4804.robot.subsystems.PuobSubsystem;
+import org.usfirst.frc.team4804.robot.subsystems.ServoSubsystem;
+import org.usfirst.frc.team4804.robot.subsystems.ShooterSubsystem;
+import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-
-import org.usfirst.frc.team4804.robot.subsystems.BecciSubsystem;
-import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
-import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
-import org.usfirst.frc.team4804.robot.subsystems.PuobSubsystem;
-import org.usfirst.frc.team4804.robot.subsystems.ShooterSubsystem;
-import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
-
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -43,6 +40,7 @@ public class Robot extends IterativeRobot {
 	public static final UltrasonicSubsystem ultrasonic = new UltrasonicSubsystem();
 	public static final PuobSubsystem puob = new PuobSubsystem();
 	public static final BecciSubsystem becci = new BecciSubsystem();
+	public static final ServoSubsystem servo = new ServoSubsystem();
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -85,6 +83,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Joystick Tolerance", RobotMap.joystickTolerance);
         SmartDashboard.putNumber("Distance Tolerance", RobotMap.distanceToleranceMeters);
         SmartDashboard.putNumber("Distance Setpoint", RobotMap.distanceSetpointMeters);
+        SmartDashboard.putNumber("Becci Max Current", RobotMap.maxBecciCurrent);
         
         SmartDashboard.putNumber("In getA", 0);
     	SmartDashboard.putNumber("In getY", 0);
