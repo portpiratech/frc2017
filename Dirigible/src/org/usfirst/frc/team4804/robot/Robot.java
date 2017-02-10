@@ -10,6 +10,7 @@ import org.usfirst.frc.team4804.robot.subsystems.PuobSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.ServoSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
+import org.usfirst.frc.team4804.robot.subsystems.VisionSubsystem;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -41,6 +42,7 @@ public class Robot extends IterativeRobot {
 	public static final PuobSubsystem puob = new PuobSubsystem();
 	public static final BecciSubsystem becci = new BecciSubsystem();
 	public static final ServoSubsystem servo = new ServoSubsystem();
+	public static final VisionSubsystem vision = new VisionSubsystem();
 	public static OI oi;
 
 	Command autonomousCommand;

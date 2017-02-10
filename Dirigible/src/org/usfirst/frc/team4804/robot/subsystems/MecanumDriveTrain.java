@@ -1,17 +1,19 @@
 package org.usfirst.frc.team4804.robot.subsystems;
 
+import org.usfirst.frc.team4804.robot.Robot;
 import org.usfirst.frc.team4804.robot.RobotMap;
 import org.usfirst.frc.team4804.robot.commands.MecanumDriveCommand;
 
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class MecanumDriveTrain extends Subsystem {
+public class MecanumDriveTrain extends PIDSubsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -22,7 +24,20 @@ public class MecanumDriveTrain extends Subsystem {
 	private CANTalon frontRight = new CANTalon(RobotMap.FRONT_RIGHT_ID);
 	private CANTalon rearRight = new CANTalon(RobotMap.REAR_RIGHT_ID);
 	
-	public MecanumDriveTrain(){
+	public double p, i, d;
+	public boolean centered = false;
+	
+	public MecanumDriveTrain() {
+		super(0.5, 0.0, 0.3);
+		
+		p = getPIDController().getP();
+		i = getPIDController().getI();
+		d = getPIDController().getD();
+		
+		getPIDController().setContinuous(false);
+		getPIDController().setAbsoluteTolerance(0.01);
+		
+		//invert  the left side motors so that mecanum works
 		frontLeft.setInverted(true);
 		rearLeft.setInverted(true);
 		
@@ -46,5 +61,45 @@ public class MecanumDriveTrain extends Subsystem {
     public void stop() {
     	drive.mecanumDrive_Polar(0, 0, 0);
     }
+    
+    public void enablePID() {
+		getPIDController().enable();
+	}
+	
+	public void enablePID(boolean enable) {
+		if(enable) {
+			getPIDController().enable();
+		} else {
+			getPIDController().disable();
+		}
+	}
+	
+	//PID constants
+	public void setPID(double p, double i, double d) {
+    	Robot.driveTrain.p = p;
+    	Robot.driveTrain.i = i;
+    	Robot.driveTrain.d = d;
+    	Robot.driveTrain.getPIDController().setPID(p, i, d);
+    }
+    
+    public void updatePID() {
+    	p = SmartDashboard.getNumber("Drive const-Proportional (p)", p);
+    	i = SmartDashboard.getNumber("Drive const-Integral (i)", i);
+    	d = SmartDashboard.getNumber("Drive const-Derivative (d)", d);
+    	setPID(p, i, d);
+    }
+
+	@Override
+	protected double returnPIDInput() {
+		// TODO Auto-generated method stub\
+		double pidInput = 0;
+		return pidInput;
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
