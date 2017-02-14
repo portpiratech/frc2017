@@ -57,6 +57,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         chooser = new SendableChooser();
         
+        Robot.vision.cameraInit();
+        
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
         SmartDashboard.putNumber("Shooter Speed", RobotMap.shooterSpeedMultiplier);

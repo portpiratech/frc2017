@@ -50,22 +50,39 @@ public class VisionSubsystem extends Subsystem {
 		//}
 	}
 	
+	UsbCamera camera;
+	CvSink cvSink;
+	CvSource outputStream;
+	Mat source;
+	Mat output;
+	
 	public void cameraInit() {
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		camera = CameraServer.getInstance().startAutomaticCapture();
 		camera.setResolution(640, 480);
+		
+		cvSink = CameraServer.getInstance().getVideo();
+		outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+	
+		source = new Mat();
+		output = new Mat();
 	}
 	
 	public void frameAutoDisplay() {		
-		CvSink  cvSink = CameraServer.getInstance().getVideo();
-		CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+		cvSink = CameraServer.getInstance().getVideo();
+		outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
 	
-		Mat source = new Mat();
-		Mat output = new Mat();
+		source = new Mat();
+		output = new Mat();
 		
 		cvSink.grabFrame(source);
 		Core.flip(source, source, -1);
 		Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
 		outputStream.putFrame(output);
+		
+		source.release();
+		output.release();
+		outputStream.free();
+		//cvSink.free();
 	}
 	
 	public void enableProcessing() {
