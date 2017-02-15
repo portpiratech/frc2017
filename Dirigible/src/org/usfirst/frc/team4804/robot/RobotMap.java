@@ -60,6 +60,7 @@ public class RobotMap {
 	public static double servoUpPos = 90; //need to fine-tune
 	public static double servoDownPos = 0;
 	// Picker-Upper Of Balls (PUOB):
+	public static double puobSpeed = 0.5;
 	// Ben's Excellent Climber Contraption Ingenious or something (BECCI):
 	public static double maxBecciCurrent = 300000000; //Amperes
 	

@@ -40,16 +40,6 @@ public class VisionSubsystem extends Subsystem {
 	public void log() {
 	}
 	
-	public void frameProcess() {
-		//for(int i = 0; i<10; i++) {
-		//if(System.currentTimeMillis() - lastFrameProcessTimeMs >= captureIntervalMs) {
-		
-			//Timer.delay(0.1);
-			//lastFrameProcessTimeMs = System.currentTimeMillis();
-		//}
-		//}
-	}
-	
 	UsbCamera camera;
 	CvSink cvSink;
 	CvSource outputStream;
@@ -82,7 +72,17 @@ public class VisionSubsystem extends Subsystem {
 		source.release();
 		output.release();
 		outputStream.free();
-		//cvSink.free();
+		//cvSink.free(); <-- Crashes the robot because this removes the camera from the video sink
+	}
+	
+	public void frameProcess() {
+		//for(int i = 0; i<10; i++) {
+		//if(System.currentTimeMillis() - lastFrameProcessTimeMs >= captureIntervalMs) {
+		
+			//Timer.delay(0.1);
+			//lastFrameProcessTimeMs = System.currentTimeMillis();
+		//}
+		//}
 	}
 	
 	public void enableProcessing() {

@@ -1,22 +1,21 @@
 package org.usfirst.frc.team4804.robot.subsystems;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.HashMap;
+
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
-
-import org.opencv.core.*;
-import org.opencv.core.Core.*;
-import org.opencv.features2d.FeatureDetector;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.*;
-import org.opencv.objdetect.*;
 
 /**
 * GripPipeline class.
@@ -80,7 +79,15 @@ public class GripPipeline implements VisionPipeline {
 		double filterContoursMinRatio = 0;
 		double filterContoursMaxRatio = 1000;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
-
+		
+		ArrayList<Point> points = new ArrayList<Point>();
+		
+		/// Approximate contours to polygons + get bounding rects and circles... somehow.
+		ArrayList<MatOfPoint2f> approxPolygonsOutput;
+		for(int i = 0; i<filterContoursOutput.size(); i++) {
+			//Imgproc.approxPolyDP(filterContoursOutput.get(i), approxPolygonsOutput.get(i), double epsilon, boolean closed);
+		}
+		
 		// Step CV_rectangle0:
 		Mat cvRectangleSrc = cvFlipOutput;
 		Point cvRectanglePt1 = new Point(0, 0);

@@ -27,7 +27,7 @@ public class PuobSubsystem extends Subsystem {
     }
     
     public void startPuob() {
-    	puobMotor.set(1);
+    	puobMotor.set(RobotMap.puobSpeed);
     }
     
     public void stopPuob() {
