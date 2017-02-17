@@ -7,6 +7,7 @@ import org.usfirst.frc.team4804.robot.OI;
 import org.usfirst.frc.team4804.robot.Robot;
 import org.usfirst.frc.team4804.robot.subsystems.VisionSubsystem;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -32,6 +33,7 @@ public class VisionDisplay extends Command {
     	//call a method once after toggling
         if(!called) {
         	if(visionProcessing) {
+        		Timer.delay(0.1);
         		Robot.vision.frameProcess();
         	} else {
         		Robot.vision.frameAutoDisplay();

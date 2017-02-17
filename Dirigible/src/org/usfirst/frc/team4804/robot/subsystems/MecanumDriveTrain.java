@@ -59,7 +59,18 @@ public class MecanumDriveTrain extends PIDSubsystem {
     }
     
     public void stop() {
-    	drive.mecanumDrive_Polar(0, 0, 0);
+    	mecanumDrivePolar(0, 0, 0);
+    }
+    
+    public void rotateToAngle(double gyroAngle, double targetAngle) {
+    	double rotation;
+    	
+    	while(Math.abs(targetAngle - gyroAngle) > 2) {
+    		// if (targetAngle - gyroAngle > 0) { rotate CCW }
+    		// if (targetAngle - gyroAngle < 0) { rotate CW }
+    		rotation = RobotMap.driveSpeedMultiplier*(targetAngle - gyroAngle);
+    		mecanumDriveCartesian(0, 0, rotation, gyroAngle);
+    	}
     }
     
     public void enablePID() {

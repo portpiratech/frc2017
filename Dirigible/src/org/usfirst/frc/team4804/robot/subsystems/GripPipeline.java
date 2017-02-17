@@ -80,24 +80,36 @@ public class GripPipeline implements VisionPipeline {
 		double filterContoursMaxRatio = 1000;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 		
-		ArrayList<Point> points = new ArrayList<Point>();
 		
 		/// Approximate contours to polygons + get bounding rects and circles... somehow.
-		ArrayList<MatOfPoint2f> approxPolygonsOutput;
-		for(int i = 0; i<filterContoursOutput.size(); i++) {
-			//Imgproc.approxPolyDP(filterContoursOutput.get(i), approxPolygonsOutput.get(i), double epsilon, boolean closed);
+		MatOfPoint[] contours_poly = new MatOfPoint[filterContoursOutput.size()];
+		MatOfPoint2f[] contours_poly2f = new MatOfPoint2f[filterContoursOutput.size()];
+		ArrayList<Rect> boundRect = new ArrayList<Rect>( filterContoursOutput.size() );
+		//Convert MatOfPoint objects to MatOfPoint2f
+		List<MatOfPoint2f> contours = new ArrayList<>();
+		for(MatOfPoint point : filterContoursOutput) {
+		    MatOfPoint2f newPoint = new MatOfPoint2f(point.toArray());
+		    contours.add(newPoint);
+		}
+		//Approximate contours to polygons
+		for(int i = 0; i < contours.size(); i++) {
+			Imgproc.approxPolyDP(contours.get(i), contours_poly2f[i], 4.0, true); //approximate closed polygons within 4.0 pixels
+			contours_poly[i] = new MatOfPoint(contours_poly2f[i].toArray()); //convert MatOfPoint2f to MatOfPoint
+			boundRect.add(Imgproc.boundingRect(contours_poly[i])); //add boundingRect defined by the MatOfPoint
 		}
 		
 		// Step CV_rectangle0:
 		Mat cvRectangleSrc = cvFlipOutput;
-		Point cvRectanglePt1 = new Point(0, 0);
-		Point cvRectanglePt2 = new Point(0, 0);
-		Scalar cvRectangleColor = new Scalar(0.0, 0.0, 0.0, 0.0);
-		double cvRectangleThickness = 0;
-		int cvRectangleLinetype = Core.LINE_8;
-		double cvRectangleShift = 0;
-		cvRectangle(cvRectangleSrc, cvRectanglePt1, cvRectanglePt2, cvRectangleColor, cvRectangleThickness, cvRectangleLinetype, cvRectangleShift, cvRectangleOutput);
-
+		for(int i = 0; i < contours.size(); i++) {
+			Point cvRectanglePt1 = boundRect.get(i).tl();
+			Point cvRectanglePt2 = boundRect.get(i).br();
+			Scalar cvRectangleColor = new Scalar(0.0, 0.0, 0.0, 0.0);
+			double cvRectangleThickness = 1;
+			int cvRectangleLinetype = Core.LINE_8;
+			double cvRectangleShift = 0;
+			cvRectangle(cvRectangleSrc, cvRectanglePt1, cvRectanglePt2, cvRectangleColor, cvRectangleThickness, cvRectangleLinetype, cvRectangleShift, cvRectangleOutput);
+			cvRectangleSrc = cvRectangleOutput;
+		}
 	}
 
 	/**
