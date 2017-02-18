@@ -1,8 +1,6 @@
 
 package org.usfirst.frc.team4804.robot;
 
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4804.robot.subsystems.BecciSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
@@ -12,10 +10,6 @@ import org.usfirst.frc.team4804.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.VisionSubsystem;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -57,7 +51,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         chooser = new SendableChooser();
         
-        Robot.vision.cameraInit();
+        //Robot.vision.cameraInit();
         
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
@@ -70,8 +64,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Distance Setpoint", RobotMap.distanceSetpointMeters);
         SmartDashboard.putNumber("Becci Max Current", RobotMap.maxBecciCurrent);
         
-        SmartDashboard.putNumber("In getA", 0);
-    	SmartDashboard.putNumber("In getY", 0);
+        SmartDashboard.putNumber("PUOB Speed", RobotMap.puobSpeed);
+        SmartDashboard.putNumber("BECCI Speed Mult", RobotMap.becciSpeedMultiplier);
     	
     }
     

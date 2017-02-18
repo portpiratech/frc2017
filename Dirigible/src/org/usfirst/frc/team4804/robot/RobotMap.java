@@ -8,44 +8,41 @@ package org.usfirst.frc.team4804.robot;
  */
 public class RobotMap {
 	
-	
-	// CAN Device IDs (CAN Talon SRX)
+	/* CAN Device IDs (CAN Talon SRX) */
 	// Drive Train:
-	public static final int FRONT_LEFT_ID = 1;
-	public static final int REAR_LEFT_ID = 2;
-	public static final int FRONT_RIGHT_ID = 3;
-	public static final int REAR_RIGHT_ID = 4;
+	public static final int FRONT_LEFT_ID = 2;
+	public static final int REAR_LEFT_ID = 1;
+	public static final int FRONT_RIGHT_ID = 6;
+	public static final int REAR_RIGHT_ID = 7;
 	// Shooter:
 	public static final int SHOOTINGDRIVE_ID = 5;
-	public static final int AGITATOR_ID = 8;
 	// Puob ID:
-	public static final int PUOB_ID = 6;
+	public static final int PUOB_ID = 4;
 	// Becci (climber) IDs:
-	public static final int CLIMB_MOTOR_1_ID = 7;
+	public static final int CLIMB_MOTOR_1_ID = 3;
 	
-	// Other Device IDs
-	public static final int ULTRASONIC_ANALOG_ID = 0; //Analog In
-	// (Servos???)
-	public static final int BALLGATE_SERVO_ID = 0; //PWM
-
+	
+	/* Other Device IDs */
+	public static final int ULTRASONIC_ANALOG_ID = 0; //Analog In [0,3]
+	public static final int AGITATOR_RELAY_ID = 0; //PWM (Spike Relay) [0,9]
+	public static final int BALLGATE_SERVO_ID = 0; //PWM (Servo) [0,9]
 		
 	
-	// Xbox Controller Information
+	/* Xbox Controller Information */
 	// Controller IDs:
 	public static final int DRIVER_CONTROLLER_ID = 0;
 	public static final int OPERATOR_CONTROLLER_ID = 1;
-	// Joysticks [-1,1]:
+	// Joysticks; output [-1,1]:
 	public static final int LEFT_STICK_X_AXIS = 0;
 	public static final int LEFT_STICK_Y_AXIS = 1;
 	public static final int RIGHT_STICK_X_AXIS = 4;
 	public static final int RIGHT_STICK_Y_AXIS = 5;
-	// Triggers [0,1]:
+	// Triggers; output [0,1]:
 	public static final int LEFT_TRIGGER_AXIS = 2;
 	public static final int RIGHT_TRIGGER_AXIS = 3;
 	
 	
-	
-	// Constants / Multipliers / Variables
+	/* Constants, Multipliers, & Variables */
 	// General:
 	public static double joystickTolerance = 0.15;
 	// DriveTrain:
@@ -60,8 +57,9 @@ public class RobotMap {
 	public static double servoUpPos = 90; //need to fine-tune
 	public static double servoDownPos = 0;
 	// Picker-Upper Of Balls (PUOB):
-	public static double puobSpeed = 0.5;
-	// Ben's Excellent Climber Contraption Ingenious or something (BECCI):
+	public static double puobSpeed = 0.7;
+	// Ben's Excellent Climber Contraption Ingenious (BECCI):
+	public static double becciSpeedMultiplier = 1.0;
 	public static double maxBecciCurrent = 300000000; //Amperes
 	
 	

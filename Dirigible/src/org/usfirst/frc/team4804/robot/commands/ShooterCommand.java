@@ -33,21 +33,21 @@ public class ShooterCommand extends Command {
     		Robot.shooter.startShooter(shooterSpeed);
     		
     		double agitatorSpeed = SmartDashboard.getNumber("Agitator Speed", RobotMap.agitatorSpeedMultiplier);
-    		Robot.shooter.startAgitator(agitatorSpeed);
+    		Robot.shooter.startAgitator();
     	}
     	
     	if(operatorController.getBButton()) {
-    		Robot.servo.closeGate();
+    		//Robot.servo.closeGate();
     		Robot.shooter.stopShooter();
     		Robot.shooter.stopAgitator();
     	}
     	
     	if(operatorController.getStartButton()) {
-    		Robot.servo.liftGate();
+    		//Robot.servo.liftGate();
     	}
     	
     	if(operatorController.getBackButton()) {
-    		Robot.servo.closeGate();
+    		//Robot.servo.closeGate();
     	}
     }
 

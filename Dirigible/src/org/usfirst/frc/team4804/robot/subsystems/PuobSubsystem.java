@@ -6,6 +6,7 @@ import org.usfirst.frc.team4804.robot.commands.PuobCommand;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * P.U.O.B. = Picker Upper Of Balls
@@ -27,6 +28,7 @@ public class PuobSubsystem extends Subsystem {
     }
     
     public void startPuob() {
+    	RobotMap.puobSpeed = SmartDashboard.getNumber("PUOB Speed", RobotMap.puobSpeed);
     	puobMotor.set(RobotMap.puobSpeed);
     }
     

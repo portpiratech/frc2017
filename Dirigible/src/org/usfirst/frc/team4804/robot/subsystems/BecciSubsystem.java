@@ -24,6 +24,9 @@ public class BecciSubsystem extends Subsystem {
     }
     
     public void startClimb(double power) {
+    	if(Math.abs(power) < RobotMap.joystickTolerance) {
+    		power = 0;
+    	}
     	becciMotor.set(power);
     }
     

@@ -5,6 +5,7 @@ import org.usfirst.frc.team4804.robot.commands.ShooterCommand;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ShooterSubsystem extends Subsystem {
 
 	private CANTalon shooterMotor = new CANTalon(RobotMap.SHOOTINGDRIVE_ID);
-	private CANTalon agitatorMotor = new CANTalon(RobotMap.AGITATOR_ID);
+	private Relay agitatorMotor = new Relay(RobotMap.AGITATOR_RELAY_ID);
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -32,11 +33,12 @@ public class ShooterSubsystem extends Subsystem {
     	shooterMotor.set(0);
     }
     
-    public void startAgitator(double speed) {
-    	agitatorMotor.set(speed);
+    public void startAgitator() {
+    	agitatorMotor.set(Relay.Value.kOn);
+    	agitatorMotor.set(Relay.Value.kForward);
     }
     
     public void stopAgitator() {
-    	agitatorMotor.set(0);
+    	agitatorMotor.set(Relay.Value.kOff);
     }
 }

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class BecciCommand extends Command {
 	
 	private XboxController driverController = OI.driverController;
+	private XboxController operator = OI.operatorController;
 	private BecciSubsystem becci = Robot.becci;
 	double motorSpeed = 0;
 	
@@ -30,6 +31,13 @@ public class BecciCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	double speed = RobotMap.becciSpeedMultiplier * operator.getRawAxis(RobotMap.LEFT_STICK_Y_AXIS);
+    	if(speed < 0) {
+    		speed = 0;
+    	}
+    	becci.startClimb(speed);
+    	
+    	/*
     	//While X is held, increase the speed. Otherwise, hold speed.
     	while(driverController.getXButton()) {
     		//If motor speed is not yet 100% and the current hasn't spiked (i.e. motor hasn't stalled):
@@ -50,6 +58,7 @@ public class BecciCommand extends Command {
     	
     	SmartDashboard.putNumber("Becci Speed", motorSpeed);
     	SmartDashboard.putNumber("Becci Current (Amps)", becci.getCurrent());
+    	*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

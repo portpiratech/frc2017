@@ -60,6 +60,7 @@ public class VisionSubsystem extends Subsystem {
 	}
 	
 	public void frameAutoDisplay() {		
+		/*
 		cvSink = CameraServer.getInstance().getVideo();
 		outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
 	
@@ -75,10 +76,12 @@ public class VisionSubsystem extends Subsystem {
 		output.release();
 		outputStream.free();
 		//cvSink.free(); <-- Crashes the robot b/c this removes the camera from the video sink
+		
+		 */
 	}
 	
 	public void frameProcess() {
-		grip.process(source);
+		//grip.process(source);
 		/* throws an exception... fix this later
 		 * [org.opencv.imgproc.Imgproc.findContours_1(Native Method),
 		 * org.opencv.imgproc.Imgproc.findContours(Unknown Source),

@@ -29,44 +29,12 @@ public class ServoCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	/* //Once Start is pressed, toggle servo once
     	while(operatorController.getStartButton()) {
-    		
-    		//If servo hasn't been toggled yet, then toggle it
-    		if(!alreadyToggled) {
-    			servo.toggleGate();
-    		} else {
-    			//do nothing
-    		}
-    		
-    		//Mark servo as toggled so that it won't toggle until the loop exits again
-    		alreadyToggled = true;
-    	}
-    	alreadyToggled = false;*/
-    	
-    	/*while(operatorController.getStartButton()) {
-    		
-    		//If servo hasn't been toggled yet, then toggle it
-    		if(!alreadyToggled) {
-    			servo.toggleGate();
-    		} else {
-    			//do nothing
-    		}
-    		
-    		//Mark servo as toggled so that it won't toggle until the loop exits again
+    		//servo.liftGate();
     		alreadyToggled = true;
     	}
     	if(alreadyToggled) {
-    		servo.toggleGate();
-    	}
-    	alreadyToggled = false;*/
-    	
-    	while(operatorController.getStartButton()) {
-    		servo.liftGate();
-    		alreadyToggled = true;
-    	}
-    	if(alreadyToggled) {
-    		servo.closeGate();
+    		//servo.closeGate();
     		alreadyToggled = false;
     	}
     }
