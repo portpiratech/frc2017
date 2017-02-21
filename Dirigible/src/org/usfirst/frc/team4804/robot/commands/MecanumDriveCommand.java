@@ -94,11 +94,11 @@ public class MecanumDriveCommand extends Command {
 		    	driveTrain.mecanumDrivePolar(magnitude, direction, rotation);
     		} else {
     			// Mecanum drive cartesian using left joystick + gyro feed
-	    		xSpeed = Math.pow(leftx, 0.7) * RobotMap.driveSpeedMultiplier;
+	    		xSpeed = leftx * RobotMap.driveSpeedMultiplier;
 	    		xSpeed = checkTolerance(xSpeed, RobotMap.joystickTolerance);
 	    		SmartDashboard.putNumber("DriveTrain Speed X", xSpeed);
 	    		
-	    		ySpeed = Math.pow(lefty, 0.7) * RobotMap.driveSpeedMultiplier;
+	    		ySpeed = lefty * RobotMap.driveSpeedMultiplier;
 	    		ySpeed = checkTolerance(ySpeed, RobotMap.joystickTolerance);
 	    		SmartDashboard.putNumber("DriveTrain Speed Y", ySpeed);
 	    		
