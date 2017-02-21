@@ -32,7 +32,7 @@ public class BecciCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double speed = RobotMap.becciSpeedMultiplier * operator.getRawAxis(RobotMap.LEFT_STICK_Y_AXIS);
-    	if(speed < 0) {
+    	if(speed > 0) {
     		speed = 0;
     	}
     	becci.startClimb(speed);

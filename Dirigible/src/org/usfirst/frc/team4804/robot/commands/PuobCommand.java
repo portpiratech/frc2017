@@ -2,6 +2,7 @@ package org.usfirst.frc.team4804.robot.commands;
 
 import org.usfirst.frc.team4804.robot.OI;
 import org.usfirst.frc.team4804.robot.Robot;
+import org.usfirst.frc.team4804.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
@@ -33,6 +34,11 @@ public class PuobCommand extends Command {
     	
     	if (operatorController.getBumper(Hand.kRight)) {
     		Robot.puob.stopPuob();
+    	}
+    	
+    	//Reverse controls
+    	if (operatorController.getTriggerAxis(Hand.kLeft) > RobotMap.joystickTolerance) {
+    		Robot.puob.startPuob(-operatorController.getTriggerAxis(Hand.kLeft) * RobotMap.puobSpeed);
     	}
 
     }

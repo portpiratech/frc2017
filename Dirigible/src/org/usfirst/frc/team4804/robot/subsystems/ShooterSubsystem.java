@@ -35,7 +35,7 @@ public class ShooterSubsystem extends Subsystem {
     
     public void startAgitator() {
     	agitatorMotor.set(Relay.Value.kOn);
-    	agitatorMotor.set(Relay.Value.kForward);
+    	agitatorMotor.set(Relay.Value.kReverse);
     }
     
     public void stopAgitator() {

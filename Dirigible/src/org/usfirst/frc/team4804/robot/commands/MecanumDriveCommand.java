@@ -35,7 +35,6 @@ public class MecanumDriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -95,11 +94,11 @@ public class MecanumDriveCommand extends Command {
 		    	driveTrain.mecanumDrivePolar(magnitude, direction, rotation);
     		} else {
     			// Mecanum drive cartesian using left joystick + gyro feed
-	    		xSpeed = leftx * RobotMap.driveSpeedMultiplier;
+	    		xSpeed = Math.pow(leftx, 0.7) * RobotMap.driveSpeedMultiplier;
 	    		xSpeed = checkTolerance(xSpeed, RobotMap.joystickTolerance);
 	    		SmartDashboard.putNumber("DriveTrain Speed X", xSpeed);
 	    		
-	    		ySpeed = lefty * RobotMap.driveSpeedMultiplier;
+	    		ySpeed = Math.pow(lefty, 0.7) * RobotMap.driveSpeedMultiplier;
 	    		ySpeed = checkTolerance(ySpeed, RobotMap.joystickTolerance);
 	    		SmartDashboard.putNumber("DriveTrain Speed Y", ySpeed);
 	    		

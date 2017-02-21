@@ -51,6 +51,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         chooser = new SendableChooser();
         
+        Robot.gyro.reset();
+        
         //Robot.vision.cameraInit();
         
 //        chooser.addObject("My Auto", new MyAutoCommand());

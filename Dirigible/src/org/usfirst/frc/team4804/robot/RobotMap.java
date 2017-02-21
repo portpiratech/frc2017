@@ -46,24 +46,24 @@ public class RobotMap {
 	// General:
 	public static double joystickTolerance = 0.15;
 	// DriveTrain:
-	public static double driveSpeedMultiplier = 0.3;
+	public static double driveSpeedMultiplier = 1.0;
 	public static double driveSpeedDpadMultiplier = 0.8;
 	public static double autoApproachSpeedMultiplier = 0.50;
 	public static double distanceToleranceMeters = 0.02;
 	public static double distanceSetpointMeters = 0.5;
 	// Shooter:
-	public static double shooterSpeedMultiplier = -0.75;
+	public static double shooterSpeedMultiplier = -1.0;
 	public static double agitatorSpeedMultiplier = 0.16; //"We are going at 16 speed"
 	public static double servoUpPos = 90; //need to fine-tune
 	public static double servoDownPos = 0;
 	// Picker-Upper Of Balls (PUOB):
-	public static double puobSpeed = 0.7;
+	public static double puobSpeed = 1.0;
 	// Ben's Excellent Climber Contraption Ingenious (BECCI):
 	public static double becciSpeedMultiplier = 1.0;
 	public static double maxBecciCurrent = 300000000; //Amperes
 	
 	
-	
+    
 	////
     // If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:

@@ -7,7 +7,11 @@ import org.usfirst.frc.team4804.robot.commands.MecanumDriveCommand;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.hal.HAL;
+import edu.wpi.first.wpilibj.hal.FRCNetComm.tInstances;
+import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -50,12 +54,12 @@ public class MecanumDriveTrain extends PIDSubsystem {
     	setDefaultCommand(new MecanumDriveCommand());
     }
     
-    public void mecanumDrivePolar(double magnitude, double direction, double rotation){
-    	drive.mecanumDrive_Polar(magnitude, direction, rotation);
+    public void mecanumDrivePolar(double driveSpeedMagnitude, double driveDirection, double rotationSpeed){
+    	drive.mecanumDrive_Polar(driveSpeedMagnitude, driveDirection, rotationSpeed);
     }
     
-    public void mecanumDriveCartesian(double xSpeed, double ySpeed, double rotation, double gyroAngle) {
-    	drive.mecanumDrive_Cartesian(xSpeed, ySpeed, rotation, gyroAngle);
+    public void mecanumDriveCartesian(double strafeSpeed, double forwardSpeed, double rotationSpeed, double gyroAngle) {
+    	drive.mecanumDrive_Cartesian(strafeSpeed, forwardSpeed, rotationSpeed, gyroAngle);
     }
     
     public void stop() {
