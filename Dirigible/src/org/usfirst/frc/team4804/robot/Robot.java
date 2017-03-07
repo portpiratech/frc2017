@@ -23,6 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ * 
+ * (Robot temporary code name was Dirigible.
+ * Now it's S.C.A.R.L.E.T.T.: Shooting Climbing Amazing Robot Legitimately Engineered To Transcendence.)
  */
 public class Robot extends IterativeRobot {
 
