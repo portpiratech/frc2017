@@ -5,7 +5,7 @@
 package org.usfirst.frc.team4804.robot.commands;
 import org.usfirst.frc.team4804.robot.OI;
 import org.usfirst.frc.team4804.robot.Robot;
-import org.usfirst.frc.team4804.robot.subsystems.VisionSubsystem;
+//import org.usfirst.frc.team4804.robot.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
@@ -31,7 +31,7 @@ public class VisionDisplay extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//call a method once after toggling
-        if(!called) {
+        /*if(!called) {
         	if(visionProcessing) {
         		Timer.delay(0.1);
         		Robot.vision.frameProcess();
@@ -50,7 +50,7 @@ public class VisionDisplay extends Command {
         	primed = false;
         }else{
         	primed = true;
-        }
+        }*/ //replace with visionthread?
     }
 
     // Make this return true when this Command no longer needs to run execute()

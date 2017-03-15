@@ -1,8 +1,11 @@
 package org.usfirst.frc.team4804.robot.subsystems;
 
-import org.opencv.core.Core;
+//import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team4804.robot.Robot;
+//import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4804.robot.commands.VisionDisplay;
 
 import edu.wpi.cscore.CvSink;
@@ -10,6 +13,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The DriveTrain subsystem incorporates the sensors and actuators attached to
@@ -21,6 +25,11 @@ public class VisionSubsystem extends Subsystem {
 	public double cameraHeightMeters = 0.2; //relative to floor
 	
 	GripPipeline grip = new GripPipeline();
+	
+	private static final int IMG_WIDTH = 320;
+	private static final int IMG_HEIGHT = 240;
+	private double centerX = 0.0;
+	private final Object imgLock = new Object();
 	
 	public static boolean visionProcessing;
 	//long lastFrameProcessTimeMs;
@@ -57,6 +66,16 @@ public class VisionSubsystem extends Subsystem {
 	
 		source = new Mat();
 		output = new Mat();
+		
+		Robot.visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
+			if (!pipeline.filterContoursOutput().isEmpty()) {
+                Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+                synchronized (imgLock) {
+                    centerX = r.x + (r.width / 2);
+                }
+            }
+        });
+        Robot.visionThread.start();
 	}
 	
 	public void frameAutoDisplay() {		

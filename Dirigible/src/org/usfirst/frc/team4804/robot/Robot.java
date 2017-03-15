@@ -1,7 +1,10 @@
 
 package org.usfirst.frc.team4804.robot;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4804.robot.subsystems.BecciSubsystem;
+import org.usfirst.frc.team4804.robot.subsystems.GripPipeline;
 import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
 import org.usfirst.frc.team4804.robot.subsystems.PuobSubsystem;
@@ -16,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -44,6 +48,7 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
     SendableChooser chooser;
+    public static VisionThread visionThread;
 
     /**
      * This function is run when the robot is first started up and should be
