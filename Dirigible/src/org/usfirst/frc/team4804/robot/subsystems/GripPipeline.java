@@ -110,6 +110,7 @@ public class GripPipeline implements VisionPipeline {
 			cvRectangle(cvRectangleSrc, cvRectanglePt1, cvRectanglePt2, cvRectangleColor, cvRectangleThickness, cvRectangleLinetype, cvRectangleShift, cvRectangleOutput);
 			cvRectangleSrc = cvRectangleOutput;
 		}
+		
 	}
 
 	/**

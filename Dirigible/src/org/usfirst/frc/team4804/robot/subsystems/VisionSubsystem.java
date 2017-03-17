@@ -13,6 +13,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
@@ -59,10 +60,10 @@ public class VisionSubsystem extends Subsystem {
 	
 	public void cameraInit() {
 		camera = CameraServer.getInstance().startAutomaticCapture();
-		camera.setResolution(640, 480);
+		camera.setResolution(320, 240);
 		
 		cvSink = CameraServer.getInstance().getVideo();
-		outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+		outputStream = CameraServer.getInstance().putVideo("Blur", 320, 240);
 	
 		source = new Mat();
 		output = new Mat();
@@ -72,6 +73,7 @@ public class VisionSubsystem extends Subsystem {
                 Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
                 synchronized (imgLock) {
                     centerX = r.x + (r.width / 2);
+                    SmartDashboard.putNumber("camera centerX", centerX);
                 }
             }
         });

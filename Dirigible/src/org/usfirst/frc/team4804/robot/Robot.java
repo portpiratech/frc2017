@@ -1,15 +1,13 @@
 
 package org.usfirst.frc.team4804.robot;
 
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4804.robot.subsystems.BecciSubsystem;
-import org.usfirst.frc.team4804.robot.subsystems.GripPipeline;
 import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
 import org.usfirst.frc.team4804.robot.subsystems.PuobSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.ServoSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.ShooterSubsystem;
+import org.usfirst.frc.team4804.robot.subsystems.SwitchesSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.VisionSubsystem;
 
@@ -44,6 +42,7 @@ public class Robot extends IterativeRobot {
 	public static final BecciSubsystem becci = new BecciSubsystem();
 	public static final ServoSubsystem servo = new ServoSubsystem();
 	public static final VisionSubsystem vision = new VisionSubsystem();
+	public static final SwitchesSubsystem switches = new SwitchesSubsystem();
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -61,7 +60,7 @@ public class Robot extends IterativeRobot {
         
         Robot.gyro.reset();
         
-        //Robot.vision.cameraInit();
+        Robot.vision.cameraInit();
         
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
@@ -76,7 +75,6 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putNumber("PUOB Speed", RobotMap.puobSpeed);
         SmartDashboard.putNumber("BECCI Speed Mult", RobotMap.becciSpeedMultiplier);
-    	
     }
     
 

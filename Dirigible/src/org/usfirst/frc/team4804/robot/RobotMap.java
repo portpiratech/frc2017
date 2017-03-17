@@ -10,22 +10,25 @@ public class RobotMap {
 	
 	/* CAN Device IDs (CAN Talon SRX) */
 	// Drive Train:
-	public static final int FRONT_LEFT_ID = 2;
-	public static final int REAR_LEFT_ID = 1;
-	public static final int FRONT_RIGHT_ID = 6;
-	public static final int REAR_RIGHT_ID = 7;
+	public static final int FRONT_LEFT_ID = 2; //2;
+	public static final int REAR_LEFT_ID = 3; //1;
+	public static final int FRONT_RIGHT_ID = 0; //6;
+	public static final int REAR_RIGHT_ID = 1; //7;
 	// Shooter:
 	public static final int SHOOTINGDRIVE_ID = 5;
 	// Puob ID:
 	public static final int PUOB_ID = 4;
 	// Becci (climber) IDs:
-	public static final int CLIMB_MOTOR_1_ID = 3;
+	public static final int CLIMB_MOTOR_1_ID = 63; //3;
 	
 	
 	/* Other Device IDs */
 	public static final int ULTRASONIC_ANALOG_ID = 0; //Analog In [0,3]
 	public static final int AGITATOR_RELAY_ID = 0; //PWM (Spike Relay) [0,9]
 	public static final int BALLGATE_SERVO_ID = 0; //PWM (Servo) [0,9]
+	public static final int SWITCH_1 = 1; //Digital IO
+	public static final int SWITCH_2 = 2; //Digital IO
+	public static final int SWITCH_3 = 3; //Digital IO
 		
 	
 	/* Xbox Controller Information */

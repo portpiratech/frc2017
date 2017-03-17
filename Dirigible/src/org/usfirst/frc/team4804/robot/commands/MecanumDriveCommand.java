@@ -5,6 +5,7 @@ import org.usfirst.frc.team4804.robot.Robot;
 import org.usfirst.frc.team4804.robot.RobotMap;
 import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
+import org.usfirst.frc.team4804.robot.subsystems.SwitchesSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -20,6 +21,7 @@ public class MecanumDriveCommand extends Command {
 	private MecanumDriveTrain driveTrain = Robot.driveTrain;
 	private GyroSubsystem gyro = Robot.gyro;
 	private UltrasonicSubsystem ultrasonic = Robot.ultrasonic;
+	private SwitchesSubsystem switches = Robot.switches;
 	
 	private XboxController driverController = OI.driverController;
 	
@@ -39,6 +41,8 @@ public class MecanumDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	switches.displaySwitches();
+    	
     	//Update multipliers from smartdashboard
     	RobotMap.driveSpeedMultiplier = SmartDashboard.getNumber("DriveTrain Speed Mult", RobotMap.driveSpeedMultiplier);
     	RobotMap.driveSpeedDpadMultiplier = SmartDashboard.getNumber("DriveTrain Dpad Mult", RobotMap.driveSpeedDpadMultiplier);
