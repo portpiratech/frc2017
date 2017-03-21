@@ -30,6 +30,10 @@ public class VisionDisplay extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(!Robot.visionThread.isAlive()) {
+    		Robot.visionThread.start();
+    	}
+    	
     	//call a method once after toggling
         /*if(!called) {
         	if(visionProcessing) {

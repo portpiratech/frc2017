@@ -9,13 +9,10 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
-
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
 
 /**
 * GripPipeline class.
@@ -24,15 +21,13 @@ import edu.wpi.first.wpilibj.vision.VisionPipeline;
 *
 * @author GRIP
 */
-public class GripPipeline implements VisionPipeline {
+public class GripPipeline {
 
 	//Outputs
-	private Mat cvFlipOutput = new Mat();
 	private Mat blurOutput = new Mat();
 	private Mat hslThresholdOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
-	private Mat cvRectangleOutput = new Mat();
 
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -41,33 +36,28 @@ public class GripPipeline implements VisionPipeline {
 	/**
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
-	@Override	public void process(Mat source0) {
-		// Step CV_flip0:
-		Mat cvFlipSrc = source0;
-		FlipCode cvFlipFlipcode = FlipCode.BOTH_AXES;
-		cvFlip(cvFlipSrc, cvFlipFlipcode, cvFlipOutput);
-
+	public void process(Mat source0) {
 		// Step Blur0:
-		Mat blurInput = cvFlipOutput;
+		Mat blurInput = source0;
 		BlurType blurType = BlurType.get("Box Blur");
-		double blurRadius = 2.7027027027026973;
+		double blurRadius = 1.8018018018018018;
 		blur(blurInput, blurType, blurRadius, blurOutput);
 
 		// Step HSL_Threshold0:
 		Mat hslThresholdInput = blurOutput;
-		double[] hslThresholdHue = {51.798561151079134, 81.70648464163823};
-		double[] hslThresholdSaturation = {130.71043165467626, 255.0};
-		double[] hslThresholdLuminance = {50.449640287769796, 194.07849829351537};
+		double[] hslThresholdHue = {46.94244604316547, 112.42320819112629};
+		double[] hslThresholdSaturation = {0.0, 255.0};
+		double[] hslThresholdLuminance = {178.86690647482015, 255.0};
 		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
 
 		// Step Find_Contours0:
 		Mat findContoursInput = hslThresholdOutput;
-		boolean findContoursExternalOnly = false;
+		boolean findContoursExternalOnly = true;
 		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 5.0;
+		double filterContoursMinArea = 18.0;
 		double filterContoursMinPerimeter = 0;
 		double filterContoursMinWidth = 0;
 		double filterContoursMaxWidth = 1000;
@@ -79,46 +69,7 @@ public class GripPipeline implements VisionPipeline {
 		double filterContoursMinRatio = 0;
 		double filterContoursMaxRatio = 1000;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
-		
-		
-		/// Approximate contours to polygons + get bounding rects and circles... somehow.
-		MatOfPoint[] contours_poly = new MatOfPoint[filterContoursOutput.size()];
-		MatOfPoint2f[] contours_poly2f = new MatOfPoint2f[filterContoursOutput.size()];
-		ArrayList<Rect> boundRect = new ArrayList<Rect>( filterContoursOutput.size() );
-		//Convert MatOfPoint objects to MatOfPoint2f
-		List<MatOfPoint2f> contours = new ArrayList<>();
-		for(MatOfPoint point : filterContoursOutput) {
-		    MatOfPoint2f newPoint = new MatOfPoint2f(point.toArray());
-		    contours.add(newPoint);
-		}
-		//Approximate contours to polygons
-		for(int i = 0; i < contours.size(); i++) {
-			Imgproc.approxPolyDP(contours.get(i), contours_poly2f[i], 4.0, true); //approximate closed polygons within 4.0 pixels
-			contours_poly[i] = new MatOfPoint(contours_poly2f[i].toArray()); //convert MatOfPoint2f to MatOfPoint
-			boundRect.add(Imgproc.boundingRect(contours_poly[i])); //add boundingRect defined by the MatOfPoint
-		}
-		
-		// Step CV_rectangle0:
-		Mat cvRectangleSrc = cvFlipOutput;
-		for(int i = 0; i < contours.size(); i++) {
-			Point cvRectanglePt1 = boundRect.get(i).tl();
-			Point cvRectanglePt2 = boundRect.get(i).br();
-			Scalar cvRectangleColor = new Scalar(0.0, 0.0, 0.0, 0.0);
-			double cvRectangleThickness = 1;
-			int cvRectangleLinetype = Core.LINE_8;
-			double cvRectangleShift = 0;
-			cvRectangle(cvRectangleSrc, cvRectanglePt1, cvRectanglePt2, cvRectangleColor, cvRectangleThickness, cvRectangleLinetype, cvRectangleShift, cvRectangleOutput);
-			cvRectangleSrc = cvRectangleOutput;
-		}
-		
-	}
 
-	/**
-	 * This method is a generated getter for the output of a CV_flip.
-	 * @return Mat output from CV_flip.
-	 */
-	public Mat cvFlipOutput() {
-		return cvFlipOutput;
 	}
 
 	/**
@@ -153,40 +104,6 @@ public class GripPipeline implements VisionPipeline {
 		return filterContoursOutput;
 	}
 
-	/**
-	 * This method is a generated getter for the output of a CV_rectangle.
-	 * @return Mat output from CV_rectangle.
-	 */
-	public Mat cvRectangleOutput() {
-		return cvRectangleOutput;
-	}
-
-
-	/**
-	 * Code used for CV_flip. 
-	 * Per OpenCV spec 0 -> flip on X axis.
-	 * >0 -> flip on Y axis.
-	 * <0 -> flip on both axes.
-	 */
-	public enum FlipCode {
-		X_AXIS(0),
-		Y_AXIS(1),
-		BOTH_AXES(-1);
-		public final int value;
-		FlipCode(int value) {
-			this.value = value;
-		}
-	}	
-	
-	/**
-	 * Flips an image along X, Y or both axes.
-	 * @param src Image to flip.
-	 * @param flipcode FlipCode of which direction to flip.
-	 * @param dst flipped version of the Image.
-	 */
-	private void cvFlip(Mat src, FlipCode flipcode, Mat dst) {
-		Core.flip(src, dst, flipcode.value);
-	}
 
 	/**
 	 * An indication of which type of filter to use for a blur.
@@ -340,29 +257,378 @@ public class GripPipeline implements VisionPipeline {
 		}
 	}
 
-	/**
-	 * Draws a rectangle on an image.
-	 * @param src Image to draw rectangle on.
-	 * @param pt1 one corner of the rectangle.
-	 * @param pt2 opposite corner of the rectangle.
-	 * @param color Scalar indicating color to make the rectangle.
-	 * @param thickness Thickness of the lines of the rectangle.
-	 * @param lineType Type of line for the rectangle.
-	 * @param shift Number of decimal places in the points.
-	 * @param dst output image.
-	 */
-	private void cvRectangle(Mat src, Point pt1, Point pt2, Scalar color,
-		double thickness, int lineType, double shift, Mat dst) {
-		src.copyTo(dst);
-		if (color == null) {
-			color = Scalar.all(1.0);
-		}
-		Imgproc.rectangle(dst, pt1, pt2, color, (int)thickness, lineType, (int)shift);
-	}
-
 
 
 
 }
 
 
+
+//package org.usfirst.frc.team4804.robot.subsystems;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import org.opencv.core.Core;
+//import org.opencv.core.CvType;
+//import org.opencv.core.Mat;
+//import org.opencv.core.MatOfInt;
+//import org.opencv.core.MatOfPoint;
+//import org.opencv.core.MatOfPoint2f;
+//import org.opencv.core.Point;
+//import org.opencv.core.Rect;
+//import org.opencv.core.Scalar;
+//import org.opencv.core.Size;
+//import org.opencv.imgproc.Imgproc;
+//
+//import edu.wpi.first.wpilibj.vision.VisionPipeline;
+//
+///**
+//* GripPipeline class.
+//*
+//* <p>An OpenCV pipeline generated by GRIP.
+//*
+//* @author GRIP
+//*/
+//public class GripPipeline implements VisionPipeline {
+//
+//	//Outputs
+//	private Mat cvFlipOutput = new Mat();
+//	private Mat blurOutput = new Mat();
+//	private Mat hslThresholdOutput = new Mat();
+//	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
+//	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
+//	private Mat cvRectangleOutput = new Mat();
+//
+//	static {
+//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+//	}
+//
+//	/**
+//	 * This is the primary method that runs the entire pipeline and updates the outputs.
+//	 */
+//	@Override	public void process(Mat source0) {
+//		// Step CV_flip0:
+//		Mat cvFlipSrc = source0;
+//		FlipCode cvFlipFlipcode = FlipCode.BOTH_AXES;
+//		cvFlip(cvFlipSrc, cvFlipFlipcode, cvFlipOutput);
+//
+//		// Step Blur0:
+//		Mat blurInput = cvFlipOutput;
+//		BlurType blurType = BlurType.get("Box Blur");
+//		double blurRadius = 2.0;
+//		blur(blurInput, blurType, blurRadius, blurOutput);
+//
+//		// Step HSL_Threshold0:
+//		Mat hslThresholdInput = blurOutput;
+//		double[] hslThresholdHue = {30.0, 110.0};
+//		double[] hslThresholdSaturation = {0.0, 255.0};
+//		double[] hslThresholdLuminance = {170.0, 255.0};
+//		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
+//
+//		// Step Find_Contours0:
+//		Mat findContoursInput = hslThresholdOutput;
+//		boolean findContoursExternalOnly = false;
+//		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
+//
+//		// Step Filter_Contours0:
+//		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
+//		double filterContoursMinArea = 5.0;
+//		double filterContoursMinPerimeter = 0;
+//		double filterContoursMinWidth = 0;
+//		double filterContoursMaxWidth = 1000;
+//		double filterContoursMinHeight = 0;
+//		double filterContoursMaxHeight = 1000;
+//		double[] filterContoursSolidity = {0, 100};
+//		double filterContoursMaxVertices = 1000000;
+//		double filterContoursMinVertices = 0;
+//		double filterContoursMinRatio = 0;
+//		double filterContoursMaxRatio = 1000;
+//		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
+//		
+//		/*
+//		/// Approximate contours to polygons + get bounding rects and circles... somehow.
+//		MatOfPoint[] contours_poly = new MatOfPoint[filterContoursOutput.size()];
+//		MatOfPoint2f[] contours_poly2f = new MatOfPoint2f[filterContoursOutput.size()];
+//		ArrayList<Rect> boundRect = new ArrayList<Rect>( filterContoursOutput.size() );
+//		//Convert MatOfPoint objects to MatOfPoint2f
+//		List<MatOfPoint2f> contours = new ArrayList<>();
+//		for(MatOfPoint point : filterContoursOutput) {
+//		    MatOfPoint2f newPoint = new MatOfPoint2f(point.toArray());
+//		    contours.add(newPoint);
+//		}
+//		//Approximate contours to polygons
+//		for(int i = 0; i < contours.size(); i++) {
+//			Imgproc.approxPolyDP(contours.get(i), contours_poly2f[i], 4.0, true); //approximate closed polygons within 4.0 pixels
+//			contours_poly[i] = new MatOfPoint(contours_poly2f[i].toArray()); //convert MatOfPoint2f to MatOfPoint
+//			boundRect.add(Imgproc.boundingRect(contours_poly[i])); //add boundingRect defined by the MatOfPoint
+//		}
+//		
+//		// Step CV_rectangle0:
+//		Mat cvRectangleSrc = cvFlipOutput;
+//		for(int i = 0; i < contours.size(); i++) {
+//			Point cvRectanglePt1 = boundRect.get(i).tl();
+//			Point cvRectanglePt2 = boundRect.get(i).br();
+//			Scalar cvRectangleColor = new Scalar(0.0, 0.0, 0.0, 0.0);
+//			double cvRectangleThickness = 1;
+//			int cvRectangleLinetype = Core.LINE_8;
+//			double cvRectangleShift = 0;
+//			cvRectangle(cvRectangleSrc, cvRectanglePt1, cvRectanglePt2, cvRectangleColor, cvRectangleThickness, cvRectangleLinetype, cvRectangleShift, cvRectangleOutput);
+//			cvRectangleSrc = cvRectangleOutput;
+//		}*/
+//		
+//	}
+//
+//	/**
+//	 * This method is a generated getter for the output of a CV_flip.
+//	 * @return Mat output from CV_flip.
+//	 */
+//	public Mat cvFlipOutput() {
+//		return cvFlipOutput;
+//	}
+//
+//	/**
+//	 * This method is a generated getter for the output of a Blur.
+//	 * @return Mat output from Blur.
+//	 */
+//	public Mat blurOutput() {
+//		return blurOutput;
+//	}
+//
+//	/**
+//	 * This method is a generated getter for the output of a HSL_Threshold.
+//	 * @return Mat output from HSL_Threshold.
+//	 */
+//	public Mat hslThresholdOutput() {
+//		return hslThresholdOutput;
+//	}
+//
+//	/**
+//	 * This method is a generated getter for the output of a Find_Contours.
+//	 * @return ArrayList<MatOfPoint> output from Find_Contours.
+//	 */
+//	public ArrayList<MatOfPoint> findContoursOutput() {
+//		return findContoursOutput;
+//	}
+//
+//	/**
+//	 * This method is a generated getter for the output of a Filter_Contours.
+//	 * @return ArrayList<MatOfPoint> output from Filter_Contours.
+//	 */
+//	public ArrayList<MatOfPoint> filterContoursOutput() {
+//		return filterContoursOutput;
+//	}
+//
+//	/**
+//	 * This method is a generated getter for the output of a CV_rectangle.
+//	 * @return Mat output from CV_rectangle.
+//	 */
+//	public Mat cvRectangleOutput() {
+//		return cvRectangleOutput;
+//	}
+//
+//
+//	/**
+//	 * Code used for CV_flip. 
+//	 * Per OpenCV spec 0 -> flip on X axis.
+//	 * >0 -> flip on Y axis.
+//	 * <0 -> flip on both axes.
+//	 */
+//	public enum FlipCode {
+//		X_AXIS(0),
+//		Y_AXIS(1),
+//		BOTH_AXES(-1);
+//		public final int value;
+//		FlipCode(int value) {
+//			this.value = value;
+//		}
+//	}	
+//	
+//	/**
+//	 * Flips an image along X, Y or both axes.
+//	 * @param src Image to flip.
+//	 * @param flipcode FlipCode of which direction to flip.
+//	 * @param dst flipped version of the Image.
+//	 */
+//	private void cvFlip(Mat src, FlipCode flipcode, Mat dst) {
+//		Core.flip(src, dst, flipcode.value);
+//	}
+//
+//	/**
+//	 * An indication of which type of filter to use for a blur.
+//	 * Choices are BOX, GAUSSIAN, MEDIAN, and BILATERAL
+//	 */
+//	enum BlurType{
+//		BOX("Box Blur"), GAUSSIAN("Gaussian Blur"), MEDIAN("Median Filter"),
+//			BILATERAL("Bilateral Filter");
+//
+//		private final String label;
+//
+//		BlurType(String label) {
+//			this.label = label;
+//		}
+//
+//		public static BlurType get(String type) {
+//			if (BILATERAL.label.equals(type)) {
+//				return BILATERAL;
+//			}
+//			else if (GAUSSIAN.label.equals(type)) {
+//			return GAUSSIAN;
+//			}
+//			else if (MEDIAN.label.equals(type)) {
+//				return MEDIAN;
+//			}
+//			else {
+//				return BOX;
+//			}
+//		}
+//
+//		@Override
+//		public String toString() {
+//			return this.label;
+//		}
+//	}
+//
+//	/**
+//	 * Softens an image using one of several filters.
+//	 * @param input The image on which to perform the blur.
+//	 * @param type The blurType to perform.
+//	 * @param doubleRadius The radius for the blur.
+//	 * @param output The image in which to store the output.
+//	 */
+//	private void blur(Mat input, BlurType type, double doubleRadius,
+//		Mat output) {
+//		int radius = (int)(doubleRadius + 0.5);
+//		int kernelSize;
+//		switch(type){
+//			case BOX:
+//				kernelSize = 2 * radius + 1;
+//				Imgproc.blur(input, output, new Size(kernelSize, kernelSize));
+//				break;
+//			case GAUSSIAN:
+//				kernelSize = 6 * radius + 1;
+//				Imgproc.GaussianBlur(input,output, new Size(kernelSize, kernelSize), radius);
+//				break;
+//			case MEDIAN:
+//				kernelSize = 2 * radius + 1;
+//				Imgproc.medianBlur(input, output, kernelSize);
+//				break;
+//			case BILATERAL:
+//				Imgproc.bilateralFilter(input, output, -1, radius, radius);
+//				break;
+//		}
+//	}
+//
+//	/**
+//	 * Segment an image based on hue, saturation, and luminance ranges.
+//	 *
+//	 * @param input The image on which to perform the HSL threshold.
+//	 * @param hue The min and max hue
+//	 * @param sat The min and max saturation
+//	 * @param lum The min and max luminance
+//	 * @param output The image in which to store the output.
+//	 */
+//	private void hslThreshold(Mat input, double[] hue, double[] sat, double[] lum,
+//		Mat out) {
+//		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2HLS);
+//		Core.inRange(out, new Scalar(hue[0], lum[0], sat[0]),
+//			new Scalar(hue[1], lum[1], sat[1]), out);
+//	}
+//
+//	/**
+//	 * Sets the values of pixels in a binary image to their distance to the nearest black pixel.
+//	 * @param input The image on which to perform the Distance Transform.
+//	 * @param type The Transform.
+//	 * @param maskSize the size of the mask.
+//	 * @param output The image in which to store the output.
+//	 */
+//	private void findContours(Mat input, boolean externalOnly,
+//		List<MatOfPoint> contours) {
+//		Mat hierarchy = new Mat();
+//		contours.clear();
+//		int mode;
+//		if (externalOnly) {
+//			mode = Imgproc.RETR_EXTERNAL;
+//		}
+//		else {
+//			mode = Imgproc.RETR_LIST;
+//		}
+//		int method = Imgproc.CHAIN_APPROX_SIMPLE;
+//		Imgproc.findContours(input, contours, hierarchy, mode, method);
+//	}
+//
+//
+//	/**
+//	 * Filters out contours that do not meet certain criteria.
+//	 * @param inputContours is the input list of contours
+//	 * @param output is the the output list of contours
+//	 * @param minArea is the minimum area of a contour that will be kept
+//	 * @param minPerimeter is the minimum perimeter of a contour that will be kept
+//	 * @param minWidth minimum width of a contour
+//	 * @param maxWidth maximum width
+//	 * @param minHeight minimum height
+//	 * @param maxHeight maximimum height
+//	 * @param Solidity the minimum and maximum solidity of a contour
+//	 * @param minVertexCount minimum vertex Count of the contours
+//	 * @param maxVertexCount maximum vertex Count
+//	 * @param minRatio minimum ratio of width to height
+//	 * @param maxRatio maximum ratio of width to height
+//	 */
+//	private void filterContours(List<MatOfPoint> inputContours, double minArea,
+//		double minPerimeter, double minWidth, double maxWidth, double minHeight, double
+//		maxHeight, double[] solidity, double maxVertexCount, double minVertexCount, double
+//		minRatio, double maxRatio, List<MatOfPoint> output) {
+//		final MatOfInt hull = new MatOfInt();
+//		output.clear();
+//		//operation
+//		for (int i = 0; i < inputContours.size(); i++) {
+//			final MatOfPoint contour = inputContours.get(i);
+//			final Rect bb = Imgproc.boundingRect(contour);
+//			if (bb.width < minWidth || bb.width > maxWidth) continue;
+//			if (bb.height < minHeight || bb.height > maxHeight) continue;
+//			final double area = Imgproc.contourArea(contour);
+//			if (area < minArea) continue;
+//			if (Imgproc.arcLength(new MatOfPoint2f(contour.toArray()), true) < minPerimeter) continue;
+//			Imgproc.convexHull(contour, hull);
+//			MatOfPoint mopHull = new MatOfPoint();
+//			mopHull.create((int) hull.size().height, 1, CvType.CV_32SC2);
+//			for (int j = 0; j < hull.size().height; j++) {
+//				int index = (int)hull.get(j, 0)[0];
+//				double[] point = new double[] { contour.get(index, 0)[0], contour.get(index, 0)[1]};
+//				mopHull.put(j, 0, point);
+//			}
+//			final double solid = 100 * area / Imgproc.contourArea(mopHull);
+//			if (solid < solidity[0] || solid > solidity[1]) continue;
+//			if (contour.rows() < minVertexCount || contour.rows() > maxVertexCount)	continue;
+//			final double ratio = bb.width / (double)bb.height;
+//			if (ratio < minRatio || ratio > maxRatio) continue;
+//			output.add(contour);
+//		}
+//	}
+//
+//	/**
+//	 * Draws a rectangle on an image.
+//	 * @param src Image to draw rectangle on.
+//	 * @param pt1 one corner of the rectangle.
+//	 * @param pt2 opposite corner of the rectangle.
+//	 * @param color Scalar indicating color to make the rectangle.
+//	 * @param thickness Thickness of the lines of the rectangle.
+//	 * @param lineType Type of line for the rectangle.
+//	 * @param shift Number of decimal places in the points.
+//	 * @param dst output image.
+//	 */
+//	private void cvRectangle(Mat src, Point pt1, Point pt2, Scalar color,
+//		double thickness, int lineType, double shift, Mat dst) {
+//		src.copyTo(dst);
+//		if (color == null) {
+//			color = Scalar.all(1.0);
+//		}
+//		Imgproc.rectangle(dst, pt1, pt2, color, (int)thickness, lineType, (int)shift);
+//	}
+//
+//
+//
+//
+//}
+//
+//

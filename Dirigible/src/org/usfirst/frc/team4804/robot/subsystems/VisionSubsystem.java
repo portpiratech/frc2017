@@ -2,7 +2,9 @@ package org.usfirst.frc.team4804.robot.subsystems;
 
 //import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4804.robot.Robot;
 //import org.opencv.imgproc.Imgproc;
@@ -55,8 +57,7 @@ public class VisionSubsystem extends Subsystem {
 	UsbCamera camera;
 	CvSink cvSink;
 	CvSource outputStream;
-	Mat source;
-	Mat output;
+	Mat mat;
 	
 	public void cameraInit() {
 		camera = CameraServer.getInstance().startAutomaticCapture();
@@ -65,22 +66,32 @@ public class VisionSubsystem extends Subsystem {
 		cvSink = CameraServer.getInstance().getVideo();
 		outputStream = CameraServer.getInstance().putVideo("Blur", 320, 240);
 	
-		source = new Mat();
-		output = new Mat();
+		mat = new Mat();
 		
-		Robot.visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
+		Robot.visionThread = new VisionThread(camera, new GripPipeline(), gripPipeline -> {
+			//mat.release();
+			cvSink.grabFrame(mat);
 			if (!pipeline.filterContoursOutput().isEmpty()) {
                 Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
                 synchronized (imgLock) {
                     centerX = r.x + (r.width / 2);
+                    
+                    Point pt1 = r.tl(); //top left corner
+                    Point pt2 = r.br(); //bottom right corner
+                    Scalar color = new Scalar(255.0, 0.0, 0.0, 0.0);
+                    Imgproc.rectangle(mat, pt1, pt2, color);
+                    
+                    Imgproc.rectangle(mat, new Point(100,100), new Point(200,200), color);
+                    
                     SmartDashboard.putNumber("camera centerX", centerX);
+                    outputStream.putFrame(mat);
                 }
             }
         });
-        Robot.visionThread.start();
+		Robot.visionThread.setDaemon(true);
 	}
 	
-	public void frameAutoDisplay() {		
+	public void frameAutoDisplay() {
 		/*
 		cvSink = CameraServer.getInstance().getVideo();
 		outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
