@@ -54,7 +54,7 @@ public class VisionSubsystem extends Subsystem {
 	public void log() {
 	}
 	
-	UsbCamera camera;
+	public UsbCamera camera;
 	CvSink cvSink;
 	CvSource outputStream;
 	Mat mat;
@@ -67,8 +67,8 @@ public class VisionSubsystem extends Subsystem {
 		outputStream = CameraServer.getInstance().putVideo("Blur", 320, 240);
 	
 		mat = new Mat();
-		
-		Robot.visionThread = new VisionThread(camera, new GripPipeline(), gripPipeline -> {
+				
+		Robot.visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
 			//mat.release();
 			cvSink.grabFrame(mat);
 			if (!pipeline.filterContoursOutput().isEmpty()) {
@@ -88,6 +88,15 @@ public class VisionSubsystem extends Subsystem {
                 }
             }
         });
+		/*Robot.visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
+	        if (!pipeline.filterContoursOutput().isEmpty()) {
+	            Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+	            synchronized (imgLock) {
+	                centerX = r.x + (r.width / 2);
+	            }
+	        }
+	    });
+	    visionThread.start();*/
 		Robot.visionThread.setDaemon(true);
 	}
 	

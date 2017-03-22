@@ -14,6 +14,8 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
+import edu.wpi.first.wpilibj.vision.VisionPipeline;
+
 /**
 * GripPipeline class.
 *
@@ -21,7 +23,7 @@ import org.opencv.imgproc.Imgproc;
 *
 * @author GRIP
 */
-public class GripPipeline {
+public class GripPipeline implements VisionPipeline {
 
 	//Outputs
 	private Mat blurOutput = new Mat();

@@ -1,7 +1,10 @@
 
 package org.usfirst.frc.team4804.robot;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4804.robot.subsystems.BecciSubsystem;
+import org.usfirst.frc.team4804.robot.subsystems.GripPipeline;
 import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
 import org.usfirst.frc.team4804.robot.subsystems.PuobSubsystem;
@@ -11,6 +14,7 @@ import org.usfirst.frc.team4804.robot.subsystems.SwitchesSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.VisionSubsystem;
 
+import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
