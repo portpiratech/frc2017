@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4804.robot.subsystems;
 
 import org.usfirst.frc.team4804.robot.RobotMap;
+import org.usfirst.frc.team4804.robot.commands.SwitchReader;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -25,18 +26,19 @@ public class SwitchesSubsystem extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
+    	setDefaultCommand(new SwitchReader());
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
     
     public boolean get(int id) {
-    	boolean value;
+    	boolean value = false;
     	
     	switch(id) {
     	case 1: value = !switch1.get();
     	case 2: value = !switch2.get();
     	case 3: value = !switch3.get();
-    	default: value = false;
+    	//default: value = false;
     	}
     	
     	return value;

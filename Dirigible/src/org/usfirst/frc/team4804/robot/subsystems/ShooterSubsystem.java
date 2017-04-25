@@ -33,6 +33,10 @@ public class ShooterSubsystem extends Subsystem {
     	shooterMotor.set(0);
     }
     
+    public void reverseShooter() {
+    	shooterMotor.set(RobotMap.shooterReverseSpeed);
+    }
+    
     public void startAgitator() {
     	agitatorMotor.set(Relay.Value.kOn);
     	agitatorMotor.set(Relay.Value.kReverse);

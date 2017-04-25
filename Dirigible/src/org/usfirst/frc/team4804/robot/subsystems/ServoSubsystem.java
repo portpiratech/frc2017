@@ -11,31 +11,41 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ServoSubsystem extends Subsystem {
 
-	/*private Servo ballGate = new Servo(RobotMap.BALLGATE_SERVO_ID);
+	private Servo ballGate = new Servo(RobotMap.BALLGATE_SERVO_ID);
 	boolean gateLifted = false;
 	
     // Put methods for controlling this subsystem
-    // here. Call these from Commands.*/
+    // here. Call these from Commands.
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new ServoCommand());
+        //setDefaultCommand(new ServoCommand());
     }
     
-    /*public void liftGate() {
+    public void liftGate() {
     	ballGate.setAngle(RobotMap.servoUpPos);
     }
     
-    public void closeGate() {
+    public void dropGate(double percent) {
+    	//use with trigger on controller
+    	double difference = RobotMap.servoDownPos - RobotMap.servoUpPos;
+    	ballGate.setAngle(RobotMap.servoUpPos + percent*difference);
+    }
+    
+    public void dropGate() {
     	ballGate.setAngle(RobotMap.servoDownPos);
+    }
+    
+    public void reverseGate() {
+    	ballGate.setAngle(RobotMap.servoReversePos);
     }
     
     public void toggleGate() {
     	if(gateLifted) {
-    		closeGate();
+    		dropGate();
     	} else {
     		liftGate();
     	}
-    }*/
+    }
 }
 

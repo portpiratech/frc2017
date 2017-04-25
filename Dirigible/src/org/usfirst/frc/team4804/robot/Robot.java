@@ -1,10 +1,8 @@
 
 package org.usfirst.frc.team4804.robot;
 
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team4804.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team4804.robot.subsystems.BecciSubsystem;
-import org.usfirst.frc.team4804.robot.subsystems.GripPipeline;
 import org.usfirst.frc.team4804.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.MecanumDriveTrain;
 import org.usfirst.frc.team4804.robot.subsystems.PuobSubsystem;
@@ -14,7 +12,6 @@ import org.usfirst.frc.team4804.robot.subsystems.SwitchesSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.UltrasonicSubsystem;
 import org.usfirst.frc.team4804.robot.subsystems.VisionSubsystem;
 
-import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -66,6 +63,8 @@ public class Robot extends IterativeRobot {
         
         Robot.vision.cameraInit();
         
+        autonomousCommand = new AutonomousCommand();
+        
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
         SmartDashboard.putNumber("Shooter Speed", RobotMap.shooterSpeedMultiplier);
@@ -79,6 +78,7 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putNumber("PUOB Speed", RobotMap.puobSpeed);
         SmartDashboard.putNumber("BECCI Speed Mult", RobotMap.becciSpeedMultiplier);
+        SmartDashboard.putNumber("auto speed", RobotMap.autoSpeed);
     }
     
 
@@ -105,7 +105,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+        //autonomousCommand = (Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {

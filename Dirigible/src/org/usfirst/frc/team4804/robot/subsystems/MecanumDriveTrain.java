@@ -62,6 +62,10 @@ public class MecanumDriveTrain extends PIDSubsystem {
     	drive.mecanumDrive_Cartesian(strafeSpeed, forwardSpeed, rotationSpeed, gyroAngle);
     }
     
+    public void tankDrive(double leftSpeed, double rightSpeed) {
+    	drive.tankDrive(leftSpeed, rightSpeed);
+    }
+    
     public void stop() {
     	mecanumDrivePolar(0, 0, 0);
     }

@@ -1,11 +1,8 @@
 package org.usfirst.frc.team4804.robot.subsystems;
 
+import org.opencv.core.Core;
 //import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4804.robot.Robot;
 //import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4804.robot.commands.VisionDisplay;
@@ -15,7 +12,6 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
@@ -64,14 +60,16 @@ public class VisionSubsystem extends Subsystem {
 		camera.setResolution(320, 240);
 		
 		cvSink = CameraServer.getInstance().getVideo();
-		outputStream = CameraServer.getInstance().putVideo("Blur", 320, 240);
+		outputStream = CameraServer.getInstance().putVideo("Flipped", 320, 240);
 	
 		mat = new Mat();
 				
 		Robot.visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
 			//mat.release();
 			cvSink.grabFrame(mat);
-			if (!pipeline.filterContoursOutput().isEmpty()) {
+			Core.flip(mat, mat, -1); //flips around both axes
+			
+			/*if (!pipeline.filterContoursOutput().isEmpty() && visionProcessing) {
                 Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
                 synchronized (imgLock) {
                     centerX = r.x + (r.width / 2);
@@ -84,9 +82,9 @@ public class VisionSubsystem extends Subsystem {
                     Imgproc.rectangle(mat, new Point(100,100), new Point(200,200), color);
                     
                     SmartDashboard.putNumber("camera centerX", centerX);
-                    outputStream.putFrame(mat);
                 }
-            }
+            }*/
+			outputStream.putFrame(mat);
         });
 		/*Robot.visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
 	        if (!pipeline.filterContoursOutput().isEmpty()) {

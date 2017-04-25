@@ -21,11 +21,11 @@ public class MecanumDriveCommand extends Command {
 	private MecanumDriveTrain driveTrain = Robot.driveTrain;
 	private GyroSubsystem gyro = Robot.gyro;
 	private UltrasonicSubsystem ultrasonic = Robot.ultrasonic;
-	private SwitchesSubsystem switches = Robot.switches;
 	
 	private XboxController driverController = OI.driverController;
 	
 	boolean polarControl = false;
+	boolean tankControl = true;
 	
     public MecanumDriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -41,7 +41,6 @@ public class MecanumDriveCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	switches.displaySwitches();
     	
     	//Update multipliers from smartdashboard
     	RobotMap.driveSpeedMultiplier = SmartDashboard.getNumber("DriveTrain Speed Mult", RobotMap.driveSpeedMultiplier);
@@ -52,6 +51,7 @@ public class MecanumDriveCommand extends Command {
     	
     	double magnitude, direction, rotation;
     	double xSpeed, ySpeed;
+    	double leftSpeed, rightSpeed;
     	
     	int dpad = driverController.getPOV();
     	double leftx = driverController.getRawAxis(RobotMap.LEFT_STICK_X_AXIS);
@@ -79,8 +79,9 @@ public class MecanumDriveCommand extends Command {
     	if(driverController.getYButton()) {
     		RobotMap.distanceSetpointMeters = SmartDashboard.getNumber("Distance Setpoint", RobotMap.distanceSetpointMeters);
     		driveForwardToDistance(RobotMap.distanceSetpointMeters);
-    	} else if(dpad == -1) {
-    		// Dpad not pressed
+    		
+    	} else if(dpad == -1 && tankControl == false) {
+    		// Dpad not pressed, mecanum wheels
     		if(polarControl) {
     			// Mecanum drive polar using left joystick
 		    	magnitude = RobotMap.driveSpeedMultiplier * Math.sqrt(Math.pow(leftx, 2) + Math.pow(lefty,  2));
@@ -96,6 +97,7 @@ public class MecanumDriveCommand extends Command {
 		    	SmartDashboard.putNumber("DriveTrain Rotation", rotation);
 		    	
 		    	driveTrain.mecanumDrivePolar(magnitude, direction, rotation);
+		    	
     		} else {
     			// Mecanum drive cartesian using left joystick + gyro feed
 	    		xSpeed = leftx * RobotMap.driveSpeedMultiplier;
@@ -110,10 +112,11 @@ public class MecanumDriveCommand extends Command {
 	    		rotation = checkTolerance(rotation, RobotMap.joystickTolerance);
 	    		SmartDashboard.putNumber("DriveTrain Rotation", rotation);
 	    		
-	    		driveTrain.mecanumDriveCartesian(xSpeed, ySpeed, rotation, gyroAngle);
+	    		driveTrain.mecanumDriveCartesian(xSpeed, ySpeed, rotation, 0);
     		}
-    	} else if(dpad != -1) {
-    		// Dpad pressed
+    		
+    	} else if(dpad != -1 && tankControl == false) {
+    		// Dpad pressed, mecanum wheels
     		magnitude = RobotMap.driveSpeedMultiplier * RobotMap.driveSpeedDpadMultiplier;
     		SmartDashboard.putNumber("DriveTrain Magnitude", magnitude);
     		
@@ -125,6 +128,57 @@ public class MecanumDriveCommand extends Command {
         	SmartDashboard.putNumber("DriveTrain Rotation", rotation);
         	
         	driveTrain.mecanumDrivePolar(magnitude, direction, rotation);
+        	
+    	} else if(dpad == -1 && tankControl == true) {
+    		// Dpad not pressed, tank wheels
+    		leftSpeed = leftx * RobotMap.driveSpeedMultiplier;
+    		leftSpeed = checkTolerance(leftSpeed, RobotMap.joystickTolerance);
+    		
+    		rightSpeed = rightx * RobotMap.driveSpeedMultiplier;
+    		rightSpeed = checkTolerance(rightSpeed, RobotMap.joystickTolerance);
+    		
+    		driveTrain.tankDrive(leftSpeed, rightSpeed);
+    		
+    	} else if(dpad != -1 && tankControl == true) {
+    		switch(dpad) {
+    		case 0:
+    			leftSpeed = RobotMap.driveSpeedDpadMultiplier;
+    			rightSpeed = RobotMap.driveSpeedDpadMultiplier;
+    			break;
+    		case 45:
+    			leftSpeed = RobotMap.driveSpeedDpadMultiplier;
+    			rightSpeed = 0;
+    			break;
+    		case 90:
+    			leftSpeed = RobotMap.driveSpeedDpadMultiplier;
+    			rightSpeed = -RobotMap.driveSpeedDpadMultiplier;
+    			break;
+    		case 135:
+    			leftSpeed = 0;
+    			rightSpeed = -RobotMap.driveSpeedDpadMultiplier;
+    			break;
+    		case 180:
+    			leftSpeed = -RobotMap.driveSpeedDpadMultiplier;
+    			rightSpeed = -RobotMap.driveSpeedDpadMultiplier;
+    			break;
+    		case 215:
+    			leftSpeed = -RobotMap.driveSpeedDpadMultiplier;
+    			rightSpeed = 0;
+    			break;
+    		case 270:
+    			leftSpeed = -RobotMap.driveSpeedDpadMultiplier;
+    			rightSpeed = RobotMap.driveSpeedDpadMultiplier;
+    			break;
+    		case 315:
+    			leftSpeed = 0;
+    			rightSpeed = RobotMap.driveSpeedDpadMultiplier;
+    			break;
+    		default:
+    			leftSpeed = 0;
+    			rightSpeed = 0;
+    			break;
+    		}
+    		driveTrain.tankDrive(leftSpeed, rightSpeed);
     	}
     }
 
@@ -160,7 +214,11 @@ public class MecanumDriveCommand extends Command {
     		double speed = - RobotMap.driveSpeedMultiplier * (ultrasonic.getDistance() - distanceMeters) * RobotMap.autoApproachSpeedMultiplier;
     		// Speed is negated because the ultrasonic is mounted opposite to the front of the robot.
     		
-    		driveTrain.mecanumDrivePolar(speed, 0, 0);
+    		if (tankControl) {
+    			driveTrain.tankDrive(0, 0);
+    		} else {
+    			driveTrain.mecanumDrivePolar(speed, 0, 0);
+    		}
     	}
     	
     	driveTrain.stop();

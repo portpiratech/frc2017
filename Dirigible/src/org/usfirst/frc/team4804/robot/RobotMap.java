@@ -10,20 +10,20 @@ public class RobotMap {
 	
 	/* CAN Device IDs (CAN Talon SRX) */
 	// Drive Train:
-	public static final int FRONT_LEFT_ID = 2; //2;
-	public static final int REAR_LEFT_ID = 3; //1;
-	public static final int FRONT_RIGHT_ID = 0; //6;
-	public static final int REAR_RIGHT_ID = 1; //7;
+	public static final int FRONT_LEFT_ID = 2;
+	public static final int REAR_LEFT_ID = 1;
+	public static final int FRONT_RIGHT_ID = 6;
+	public static final int REAR_RIGHT_ID = 7;
 	// Shooter:
 	public static final int SHOOTINGDRIVE_ID = 5;
 	// Puob ID:
 	public static final int PUOB_ID = 4;
 	// Becci (climber) IDs:
-	public static final int CLIMB_MOTOR_1_ID = 63; //3;
+	public static final int CLIMB_MOTOR_1_ID = 3;
 	
 	
 	/* Other Device IDs */
-	public static final int ULTRASONIC_ANALOG_ID = 0; //Analog In [0,3]
+	public static final int ULTRASONIC_ANALOG_ID = 1; //Analog In [0,3]
 	public static final int AGITATOR_RELAY_ID = 0; //PWM (Spike Relay) [0,9]
 	public static final int BALLGATE_SERVO_ID = 0; //PWM (Servo) [0,9]
 	public static final int SWITCH_1 = 1; //Digital IO
@@ -49,16 +49,20 @@ public class RobotMap {
 	// General:
 	public static double joystickTolerance = 0.15;
 	// DriveTrain:
-	public static double driveSpeedMultiplier = 1.0;
+	public static double driveSpeedMultiplier = 0.8;
 	public static double driveSpeedDpadMultiplier = 0.8;
 	public static double autoApproachSpeedMultiplier = 0.50;
 	public static double distanceToleranceMeters = 0.02;
 	public static double distanceSetpointMeters = 0.5;
+	public static double autoSpeed = 0.5;
 	// Shooter:
-	public static double shooterSpeedMultiplier = -1.0;
-	public static double agitatorSpeedMultiplier = 0.16; //"We are going at 16 speed"
-	public static double servoUpPos = 90; //need to fine-tune
-	public static double servoDownPos = 0;
+	public static double shooterSpeedMultiplier = -0.9;
+	public static double shooterSpeedAuto = -0.85;
+	public static double shooterReverseSpeed = 0.3;
+	public static double agitatorSpeedMultiplier = 0.16; //"We are going at 16 speed" --Noah
+	public static double servoUpPos = 90;
+	public static double servoDownPos = 200;
+	public static double servoReversePos = 0;
 	// Picker-Upper Of Balls (PUOB):
 	public static double puobSpeed = 1.0;
 	// Ben's Excellent Climber Contraption Ingenious (BECCI):
